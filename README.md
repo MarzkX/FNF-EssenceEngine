@@ -18,3 +18,5 @@ change `GJApi.hx` in `src/funkin/api/GJApi.hx` to your game id and private key
 
 ## Credits:
 * Marazak(X)/Mrzk(X) - Programmer / Almost Artist
+
+this .md will be extended later...
