@@ -1,0 +1,104 @@
+import haxe.ds.StringMap;
+import flixel.util.FlxSpriteUtil;
+import objects.Character;
+
+var ghosts:Array<Character> = [];
+var characters:Array<Character> = [];
+var positions:Array<Array<Float>> = [];
+var ghostTweens:Array<FlxTween> = [];
+
+var noteCounts:StringMap<Int> = new StringMap<Int>();
+var noteTimes:StringMap<Int> = new StringMap<Int>();
+
+for (char in ['bf', 'gf', 'dad']) {
+    noteCounts.set(char, 0);
+    noteTimes.set(char, 0);
+}
+
+function onCreatePost()
+{
+    if(PlayState.SONG.charTrails)
+    {
+        characters = [game.boyfriend, game.gf, game.dad];
+        for (i in 0...characters.length)
+            positions.push([characters[i].x, characters[i].y]);
+        loadGhosts();
+    }
+    return;
+}
+
+function onEvent(n:String, v1:String, v2:String) {
+    if(PlayState.SONG.charTrails) if (n == 'Change Character') loadGhosts();
+    return;
+}
+
+function onUpdatePost(e:Float) {
+    if(PlayState.SONG.charTrails) {
+        for (i in 0...characters.length)
+            if (ghosts[i] != null) {
+                ghosts[i].holdTimer = 0;
+                ghosts[i].setPosition(positions[i][0], positions[i][1]);
+            }
+    }
+    return;
+}
+
+function goodNoteHit(n:Note) {
+    if(PlayState.SONG.charTrails) {
+        var character:String = n.gfNote ? 'gf' : 'bf';
+        var noteTime:Int = n.strumTime;
+        if(!n.isSustainNote)
+            if (noteTimes.get(character) == noteTime) {
+                noteCounts.set(character, noteCounts.get(character) + 1);
+                ghostAnim(ghosts[n.gfNote ? 1 : 0], ghostTweens[n.gfNote ? 1 : 0], game.singAnimations[n.noteData], FlxColor.fromRGB(game.boyfriend.healthColorArray[0], game.boyfriend.healthColorArray[1], game.boyfriend.healthColorArray[2]));
+            } else {
+                noteTimes.set(character, noteTime);
+                noteCounts.set(character, 1);
+            }
+    }
+    return;
+}
+
+function opponentNoteHit(n:Note) {
+    if(PlayState.SONG.charTrails) {
+        var character:String = n.gfNote ? 'gf' : 'dad';
+        var noteTime:Int = n.strumTime;
+        if(!n.isSustainNote)
+            if (noteTimes.get(character) == noteTime) {
+                noteCounts.set(character, noteCounts.get(character) + 1);
+                ghostAnim(ghosts[n.gfNote ? 1 : 2], ghostTweens[n.gfNote ? 1 : 2], game.singAnimations[n.noteData], FlxColor.fromRGB(game.dad.healthColorArray[0], game.dad.healthColorArray[1], game.dad.healthColorArray[2]));
+            } else {
+                noteTimes.set(character, noteTime);
+                noteCounts.set(character, 1);
+            }
+    }
+    return;
+}
+
+function ghostAnim(g:Character, t:FlxTween, a:String, c:FlxColor) {
+    g.alpha = 0.9;
+    g.color = c;
+    g.playAnim(a, true);
+    if (t != null) t.cancel();
+    t = FlxTween.tween(g, {alpha: 0}, 0.5, {onComplete: function(t:FlxTween){t=null;}});
+}
+
+function loadGhosts() {
+    for (ghost in ghosts) game.remove(ghost);
+    ghosts = [];
+    ghostTweens = [];
+    for (i in 0...characters.length) {
+        var ghost:Character = new Character(positions[i][0], positions[i][1], characters[i].curCharacter, i == 0);
+        ghost.alpha = .01;
+        ghosts.push(ghost);
+        ghostTweens.push(null);
+        switch(i) {
+            case 1:
+                game.addBehindGF(ghost);
+            case 2:
+                game.addBehindDad(ghost);
+            default:
+                game.addBehindBF(ghost);
+        }
+    }
+}
