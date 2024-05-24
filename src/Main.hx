@@ -1,4 +1,4 @@
-#if android
+8#if android
 import android.content.Context;
 #end
 
@@ -49,7 +49,7 @@ class Main extends Sprite
 
 	final lowFrame:Int = 20; //Unfocused Window Framerate for Optimization
 
-	// You can pretty much ignore everything from here on - your code should go in your states.
+	// You can pretty much ignore everything from here on - your code should go in your states. -no)))mzk
 
 	public static function main():Void
 	{
@@ -186,6 +186,7 @@ class Main extends Sprite
 
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
 	// very cool person for real they don't get enough credit for their work
+// imma lazy for optimize this function - mzk
 	#if CRASH_HANDLER
 	function onCrash(e:UncaughtErrorEvent):Void
 	{
