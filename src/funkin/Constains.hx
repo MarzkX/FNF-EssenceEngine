@@ -1,3 +1,5 @@
+package funkin;
+
 import openfl.Lib;
 
 @:access('openfl.Lib')
@@ -8,12 +10,12 @@ class Contains
      /*
       * A window/application title;
       */
-     public static final GAME_TITLE:String = Lib.application.window.title;
+     public static final GAME_TITLE:String = "Friday Night Funkin': Essence Engine";
 
      /*
       * Engine version;
       */
-     public static final ENGINE_VERSION:String = Lib.application.meta.get('version');
+     public static final ENGINE_VERSION:String = "0.1.1";
 
      /*
       * FNF Version
