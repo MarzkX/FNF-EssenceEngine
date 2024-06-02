@@ -1,0 +1,175 @@
+{
+	"camera_boyfriend": [
+		0,
+		0
+	],
+	"_editorMeta": {
+		"boyfriend": "pico-blazin",
+		"gf": "nene",
+		"dad": "darnell-blazin"
+	},
+	"stageUI": "",
+	"boyfriend": [
+		695,
+		165
+	],
+	"girlfriend": [
+		463,
+		140
+	],
+	"objects": [
+		{
+			"x": -168,
+			"y": -83,
+			"scale": [
+				1.4,
+				1.4
+			],
+			"image": "stages/phillyBlazin/skyBlur",
+			"flipX": false,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "sky",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				1,
+				1
+			],
+			"alpha": 1,
+			"type": "sprite"
+		},
+		{
+			"x": -426,
+			"y": -144,
+			"scale": [
+				2200,
+				1150
+			],
+			"filters": 3,
+			"color": "000000",
+			"angle": 0,
+			"name": "blacked",
+			"scroll": [
+				1,
+				1
+			],
+			"alpha": 0,
+			"type": "square"
+		},
+		{
+			"x": 1225,
+			"y": -55,
+			"scale": [
+				1,
+				1
+			],
+			"image": "stages/phillyBlazin/lightning",
+			"flipX": true,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "light2",
+			"firstAnimation": "idle",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				1,
+				1
+			],
+			"alpha": 1,
+			"animations": [
+				{
+					"offsets": null,
+					"indices": [],
+					"fps": 24,
+					"anim": "idle",
+					"loop": false,
+					"name": "lightning"
+				}
+			],
+			"type": "animatedSprite"
+		},
+		{
+			"x": 173,
+			"y": -123,
+			"scale": [
+				1,
+				1
+			],
+			"image": "stages/phillyBlazin/lightning",
+			"flipX": false,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "light",
+			"firstAnimation": "idle",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				1,
+				1
+			],
+			"alpha": 1,
+			"animations": [
+				{
+					"offsets": null,
+					"indices": [],
+					"fps": 24,
+					"anim": "idle",
+					"loop": false,
+					"name": "lightning"
+				}
+			],
+			"type": "animatedSprite"
+		},
+		{
+			"x": -406,
+			"y": -95,
+			"scale": [
+				1.45,
+				1.45
+			],
+			"image": "stages/phillyBlazin/streetBlur",
+			"flipX": false,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "ground",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				1,
+				1
+			],
+			"alpha": 1,
+			"type": "sprite"
+		},
+		{
+			"type": "gf"
+		},
+		{
+			"type": "dad"
+		},
+		{
+			"type": "boyfriend"
+		}
+	],
+	"camera_girlfriend": [
+		0,
+		0
+	],
+	"defaultZoom": 0.75,
+	"camera_speed": 1,
+	"directory": "week1",
+	"opponent": [
+		105,
+		165
+	],
+	"camera_opponent": [
+		-95,
+		-260
+	],
+	"hide_girlfriend": false
+}

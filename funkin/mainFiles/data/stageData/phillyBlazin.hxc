@@ -1,0 +1,51 @@
+import funkin.audio.visualize.ABotVis;
+
+var abotSystem:FlxAtlasSprite;
+var abotViz:ABotVis;
+
+function onCreatePost()
+{
+    abotSystem = new FlxAtlasSprite(0, 0, Paths.getPath('images/characters/abot/abotSystem'));
+    abotSystem.anim.addBySymbol('bop', 'Abot System', 24, false);
+    abotSystem.anim.play('bop');
+    abotSystem.color = 0xFF757575;
+    setVar('abotSystem', abotSystem);
+
+    abotViz = new ABotVis(FlxG.sound.music);
+    abotViz.x = game.gfGroup.x;
+    abotViz.y = game.gfGroup.y;
+    setVar('abotViz', abotViz);
+    FlxG.debugger.track(abotViz);
+}
+
+function onStepHit() {
+  if(curStep == 1) {
+    abotViz.snd = FlxG.sound.music;
+    abotViz.initAnalyzer();
+  }
+}
+
+var refershedLol = false;
+
+function onUpdatePost(elapsed:Float)
+{
+    if(!refershedLol)
+    {
+        //abotViz.snd = FlxG.sound.music;
+        //abotViz.initAnalyzer();
+        abotViz.x = game.gfGroup.x + 72;
+        abotViz.y = game.gfGroup.y + 405;
+        addBehindGF(abotViz);
+
+        abotSystem.x = game.gfGroup.x-132;
+        abotSystem.y = game.gfGroup.y+320;
+        addBehindGF(abotSystem);
+
+        refershedLol = true;
+    }
+}
+
+function onBeatHit()
+{
+    abotSystem.anim.play('bop');
+}

@@ -1,0 +1,112 @@
+{
+	"camera_boyfriend": [
+		0,
+		0
+	],
+	"_editorMeta": {
+		"boyfriend": "bf",
+		"dad": "spooky",
+		"gf": "gf"
+	},
+	"boyfriend": [
+		735,
+		135
+	],
+	"girlfriend": [
+		320,
+		130
+	],
+	"stageUI": "",
+	"objects": [
+		{
+			"x": -259,
+			"y": -78,
+			"scale": [
+				1,
+				1
+			],
+			"image": "stages/spookyMansion/halloween_bg",
+			"flipX": false,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "halloweenBG",
+			"firstAnimation": "idle",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				1,
+				1
+			],
+			"alpha": 1,
+			"animations": [
+				{
+					"loop": false,
+					"offsets": [
+						0,
+						0
+					],
+					"anim": "flash",
+					"fps": 24,
+					"name": "halloweem bg lightning strike",
+					"indices": []
+				},
+				{
+					"loop": false,
+					"offsets": [
+						0,
+						0
+					],
+					"anim": "idle",
+					"fps": 24,
+					"name": "halloweem bg0",
+					"indices": []
+				}
+			],
+			"type": "animatedSprite"
+		},
+		{
+			"type": "gf"
+		},
+		{
+			"type": "dad"
+		},
+		{
+			"type": "boyfriend"
+		},
+		{
+			"x": -600,
+			"y": -500,
+			"scale": [
+				2600,
+				1600
+			],
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "whitefuck",
+			"scroll": [
+				0,
+				0
+			],
+			"alpha": 1.38777878078145e-16,
+			"type": "square"
+		}
+	],
+	"camera_girlfriend": [
+		0,
+		0
+	],
+	"defaultZoom": 0.9,
+	"opponent": [
+		120,
+		120
+	],
+	"directory": "week1",
+	"camera_speed": 1,
+	"hide_girlfriend": false,
+	"camera_opponent": [
+		0,
+		0
+	]
+}

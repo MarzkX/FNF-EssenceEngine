@@ -1,0 +1,115 @@
+
+import funkin.audio.visualize.ABotVis;
+import flixel.addons.display.FlxBackdrop;
+
+var abotSystem:FlxAtlasSprite;
+var abotViz:ABotVis;
+var blackfuck:FlxSprite;
+var wowEffect:FlxSprite;
+var smog:FlxBackdrop;
+
+function onCreate() {
+    smog = new FlxBackdrop().loadGraphic(Paths.image("stages/phillyStreets/phillyStreets/phillySmog"));
+    smog.scrollFactor.set(0.75, 0.75);
+    smog.velocity.x = -20;
+    smog.y -= 100;
+    setVar('smog',smog);
+    smog.alpha = .001;
+    FlxTween.tween(smog, {alpha: 1}, 5);
+    add(smog);
+}
+
+function onCreatePost()
+{
+    abotSystem = new FlxAtlasSprite(0, 0, Paths.getPath('images/characters/abot/abotSystem'));
+    abotSystem.anim.addBySymbol('bop', 'Abot System', 24, false);
+    abotSystem.anim.play('bop');
+    setVar('abotSystem', abotSystem);
+
+    abotViz = new ABotVis(FlxG.sound.music);
+    abotViz.x = game.gfGroup.x;
+    abotViz.y = game.gfGroup.y;
+    setVar('abotViz', abotViz);
+    FlxG.debugger.track(abotViz);
+
+    blackfuck = new FlxSprite(-1200, -1200).makeGraphic(game.camGame.width*4, game.camGame.height*4, FlxColor.BLACK);
+    blackfuck.scrollFactor.set();
+    blackfuck.alpha = .001;
+    setVar('blackfuck', blackfuck);
+
+    wowEffect = new FlxSprite();
+    wowEffect.frames = Paths.getSparrowAtlas('characters/Pico_Shooting');
+    wowEffect.animation.addByPrefix('bop', 'Pico Reload0010', 0, false);
+    wowEffect.animation.play('bop');
+    wowEffect.screenCenter();
+    wowEffect.x += 935;
+    wowEffect.y += 285;
+    wowEffect.alpha = .001;
+    setVar('wowEffect',wowEffect);
+    addBehindBF(wowEffect);
+}
+
+function onSongStart() {
+    abotViz.snd = FlxG.sound.music;
+    abotViz.initAnalyzer();
+}
+
+var refershedLol = false;
+
+function onUpdatePost(elapsed:Float)
+{
+    if(!refershedLol)
+    {
+        //abotViz.snd = FlxG.sound.music;
+        //abotViz.initAnalyzer();
+        abotViz.x = game.gfGroup.x + 72;
+        abotViz.y = game.gfGroup.y + 405;
+        addBehindGF(abotViz);
+
+        abotSystem.x = game.gfGroup.x-132;
+        abotSystem.y = game.gfGroup.y+320;
+        addBehindGF(abotSystem);
+
+        addBehindGF(blackfuck);
+
+        refershedLol = true;
+    }
+}
+
+var anims = ['greentored', 'redtogreen'];
+var stepC = 0;
+
+function onStepHit()
+{
+  var car1 = game.getLuaObject('car1');
+  var car2 = game.getLuaObject('car2');
+  var car3 = game.getLuaObject('car3');
+  var car4 = game.getLuaObject('car4');
+
+  if(curStep % 64 == 0)
+  {
+    if(stepC > 1)
+      stepC = -1;
+
+    stepC++;
+
+    game.getLuaObject('traffic').animation.play(anims[stepC], false, false);
+  }
+
+  if(stepC == 1) {
+    FlxTween.tween(game.getLuaObject('car2'), {x: car2.x - 300}, 0.7);
+    FlxTween.tween(game.getLuaObject('car4'), {x: car4.x - 300}, 1);
+    FlxTween.tween(game.getLuaObject('car1'), {x: car1.x + 300}, 1.24);
+    FlxTween.tween(game.getLuaObject('car3'), {x: car3.x + 300}, 0.91);
+  } else {
+    FlxTween.tween(game.getLuaObject('car2'), {x: car2.x - 300}, 0.7);
+    FlxTween.tween(game.getLuaObject('car4'), {x: car4.x - 300}, 1);
+    FlxTween.tween(game.getLuaObject('car1'), {x: car1.x + 300}, 1.2);
+    FlxTween.tween(game.getLuaObject('car3'), {x: car3.x + 300}, 0.9);
+  }
+}
+
+function onBeatHit()
+{
+    abotSystem.anim.play('bop');
+}

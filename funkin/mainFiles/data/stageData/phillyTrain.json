@@ -1,0 +1,156 @@
+{
+	"camera_boyfriend": [
+		0,
+		0
+	],
+	"_editorMeta": {
+		"boyfriend": "bf",
+		"dad": "pico",
+		"gf": "gf"
+	},
+	"boyfriend": [
+		820,
+		100
+	],
+	"girlfriend": [
+		450,
+		130
+	],
+	"stageUI": "",
+	"objects": [
+		{
+			"x": -100,
+			"y": 1,
+			"scale": [
+				1,
+				1
+			],
+			"image": "stages/phillyTrain/sky",
+			"flipX": false,
+			"filters": 2,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "bg",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				0.1,
+				0.1
+			],
+			"alpha": 1,
+			"type": "sprite"
+		},
+		{
+			"x": -10,
+			"y": 0,
+			"scale": [
+				0.85,
+				0.85
+			],
+			"image": "stages/phillyTrain/city",
+			"flipX": false,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "city",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				0.3,
+				0.3
+			],
+			"alpha": 1,
+			"type": "sprite"
+		},
+		{
+			"x": -10,
+			"y": 0,
+			"scale": [
+				0.85,
+				0.85
+			],
+			"image": "stages/phillyTrain/window",
+			"flipX": false,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "window",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				0.3,
+				0.3
+			],
+			"alpha": 0,
+			"type": "sprite"
+		},
+		{
+			"x": -4,
+			"y": 70,
+			"scale": [
+				1,
+				1
+			],
+			"image": "stages/phillyTrain/behindTrain",
+			"flipX": false,
+			"filters": 2,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "behindTrain",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				1,
+				1
+			],
+			"alpha": 1,
+			"type": "sprite"
+		},
+		{
+			"x": -4,
+			"y": 70,
+			"scale": [
+				1,
+				1
+			],
+			"image": "stages/phillyTrain/street",
+			"flipX": false,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "street",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				1,
+				1
+			],
+			"alpha": 1,
+			"type": "sprite"
+		},
+		{
+			"type": "gf"
+		},
+		{
+			"type": "dad"
+		},
+		{
+			"type": "boyfriend"
+		}
+	],
+	"camera_girlfriend": [
+		0,
+		0
+	],
+	"defaultZoom": 1.05,
+	"opponent": [
+		275,
+		100
+	],
+	"camera_speed": 1,
+	"hide_girlfriend": false,
+	"camera_opponent": [
+		0,
+		0
+	]
+}
