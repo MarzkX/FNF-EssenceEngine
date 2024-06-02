@@ -13,7 +13,7 @@ typedef WeekFile =
 	var weekBefore:String;
 	var storyName:String;
 	var weekName:String;
-	var freeplayColor:Array<Int>;
+	var storyColor:Array<Int>;
 	var startUnlocked:Bool;
 	var hiddenUntilUnlocked:Bool;
 	var hideStoryMode:Bool;
@@ -33,7 +33,7 @@ class WeekData {
 	public var weekBefore:String;
 	public var storyName:String;
 	public var weekName:String;
-	public var freeplayColor:Array<Int>;
+	public var storyColor:Array<Int>;
 	public var startUnlocked:Bool;
 	public var hiddenUntilUnlocked:Bool;
 	public var hideStoryMode:Bool;
@@ -48,9 +48,9 @@ class WeekData {
 			weekCharacters: ['dad', 'bf', 'gf'],
 			weekBackground: 'stage',
 			weekBefore: 'tutorial',
-			storyName: 'Your New Week',
-			weekName: 'Custom Week',
-			freeplayColor: [146, 113, 253],
+			storyName: 'Your New Level',
+			weekName: 'Custom Level',
+			storyColor: [249, 207, 81],
 			startUnlocked: true,
 			hiddenUntilUnlocked: false,
 			hideStoryMode: false,
@@ -85,10 +85,10 @@ class WeekData {
 		var originalLength:Int = directories.length;
 		#end
 
-		var sexList:Array<String> = CoolUtil.coolTextFile(Paths.getSharedPath('data/weekList.txt'));
+		var sexList:Array<String> = CoolUtil.coolTextFile(Paths.getSharedPath('data/levelList.txt'));
 		for (i in 0...sexList.length) {
 			for (j in 0...directories.length) {
-				var fileToCheck:String = directories[j] + 'data/weekData/' + sexList[i] + '.json';
+				var fileToCheck:String = directories[j] + 'data/levelData/' + sexList[i] + '.json';
 				if(!weeksLoaded.exists(sexList[i])) {
 					var week:WeekFile = getWeekFile(fileToCheck);
 					if(week != null) {
@@ -111,9 +111,9 @@ class WeekData {
 
 		#if MODS_ALLOWED
 		for (i in 0...directories.length) {
-			var directory:String = directories[i] + 'data/weekData/';
+			var directory:String = directories[i] + 'data/levelData/';
 			if(FileSystem.exists(directory)) {
-				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(directories[i] + 'data/weekList.txt');
+				var listOfWeeks:Array<String> = CoolUtil.coolTextFile(directories[i] + 'data/levelList.txt');
 				for (daWeek in listOfWeeks)
 				{
 					var path:String = directory + daWeek + '.json';

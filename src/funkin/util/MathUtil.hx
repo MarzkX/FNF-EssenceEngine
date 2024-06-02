@@ -16,6 +16,10 @@ class MathUtil
    * @param base The starting value, when `progress <= 0`.
    * @param target The ending value, when `progress >= 1`.
    * @param ratio Value used to interpolate between `base` and `target`.
+   * 
+   * @param base Ur value where value is parasosial
+   * @param target Value where a value is no parasosial
+   * @param ratio Speedy
    *
    * @return The interpolated value.
    */

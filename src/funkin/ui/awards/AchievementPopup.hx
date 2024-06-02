@@ -21,7 +21,7 @@ class AchievementPopup extends openfl.display.Sprite {
 		// achievement icon
 		var graphic = null;
 		var hasAntialias:Bool = ClientPrefs.data.antialiasing;
-		var image:String = 'achievements/$achieve';
+		var image:String = 'ui/achievements/$achieve';
 		
 		var achievement:Achievement = null;
 		if(Achievements.exists(achieve)) achievement = Achievements.get(achieve);
@@ -42,7 +42,7 @@ class AchievementPopup extends openfl.display.Sprite {
 		Mods.currentModDirectory = lastMod;
 		#end
 
-		if(graphic == null) graphic = Paths.image('unknownMod', false);
+		if(graphic == null) graphic = PathImage.menu('addons/unknownMod', false);
 
 		var sizeX = 100;
 		var sizeY = 100;

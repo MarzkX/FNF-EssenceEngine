@@ -68,9 +68,14 @@ class FunkinSoundTray extends FlxSoundTray
     y = -height;
     screenCenter();
 
-    volumeUpSound = Paths.file('soundtray/Volup.${Paths.SOUND_EXT}', SOUND, 'ingame');
-    volumeDownSound = Paths.file('soundtray/Voldown.${Paths.SOUND_EXT}', SOUND, 'ingame');
-    volumeMaxSound = Paths.file('soundtray/VolMAX.${Paths.SOUND_EXT}', SOUND, 'ingame');
+    try {
+      volumeUpSound = Paths.file('soundtray/Volup.${Paths.SOUND_EXT}', SOUND, 'ingame');
+      volumeDownSound = Paths.file('soundtray/Voldown.${Paths.SOUND_EXT}', SOUND, 'ingame');
+      volumeMaxSound = Paths.file('soundtray/VolMAX.${Paths.SOUND_EXT}', SOUND, 'ingame');
+    }
+    catch(e) {
+      throw 'Volume Files not finded!';
+    }
 
     trace("Custom tray added!");
   }

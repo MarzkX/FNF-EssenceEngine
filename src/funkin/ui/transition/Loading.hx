@@ -1,5 +1,8 @@
 package funkin.ui.transition;
 
+import openfl.Assets;
+import flixel.graphics.FlxGraphic;
+import flixel.util.FlxGradient;
 import tjson.TJSON;
 import flixel.ui.FlxBar;
 import flixel.FlxState;
@@ -15,8 +18,8 @@ class Loading extends MusicBeatState
 
     public function new(what:FlxState, string:String)
     {
-        statewhat = what;
-        stateStr = string;
+        this.statewhat = what;
+        this.stateStr = string;
 
         /*
         if(string.toLowerCase() == 'game')
@@ -47,25 +50,31 @@ class Loading extends MusicBeatState
     {
         super.create();
 
-        var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        /*
+        var bg:FlxSprite = new FlxSprite().loadGraphic(PathImage.def_bg());
         bg.color = 0x686868;
         bg.antialiasing = ClientPrefs.data.antialiasing;
         add(bg);
+
+        var gradient:FlxSprite = FlxGradient.createGradientFlxSprite(FlxG.width, 800, [0x00000000, 0xFF000000], 1, 90);
+        gradient.scrollFactor.set();
+        gradient.alpha = 0.6;
+        add(gradient);
 
         bar = new FlxBar(3, FlxG.height - 32.5, LEFT_TO_RIGHT, FlxG.width-6, 25, 
             this, 'loaded', 0, 1, true);
         bar.createFilledBar(0xC4FFFFFF, 0xC4000000, true, FlxColor.WHITE);
         add(bar);
 
-        var lode:FlxSprite = new FlxSprite(2, FlxG.height - 35).loadGraphic(Paths.image('loadingbar'));
+        var lode:FlxSprite = new FlxSprite(2, FlxG.height - 35).loadGraphic(FlxGraphic.fromBitmapData(Assets.getBitmapData(Paths.file('loading/bar.png', IMAGE, 'ingame'))));
         lode.antialiasing = true;
         add(lode);
 
-        loaded_text = new FlxText(52, FlxG.height - 65, 500, 'Starting...', 16);
+        loaded_text = new FlxText(52, FlxG.height - 65, 500, 'This loading is no loading...', 16);
         loaded_text.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         add(loaded_text);
 
-        spin = new FlxSprite(-12.5, FlxG.height - 90).loadGraphic(Paths.image('spinner'));
+        spin = new FlxSprite(-12.5, FlxG.height - 90).loadGraphic(FlxGraphic.fromBitmapData(Assets.getBitmapData(Paths.file('loading/spinner.png', IMAGE, 'ingame'))));
         spin.antialiasing = true;
         spin.scale.set(0.4, 0.4);
         add(spin);
@@ -73,11 +82,16 @@ class Loading extends MusicBeatState
         spinTween = FlxTween.tween(spin, {angle: 360}, 0.7, {type: LOOPING});
 
         //Caching start...
-        new FlxTimer().start(0.7, function(T:FlxTimer)
+        new FlxTimer().start(0.01, function(T:FlxTimer)
         {
             T = null;
             startCache();
-        });
+        });*/
+
+        if(FlxG.sound.music.playing)
+            FlxG.sound.music.stop();
+
+        state(() -> getNextState(statewhat, false));
     }
 
     function startCache()

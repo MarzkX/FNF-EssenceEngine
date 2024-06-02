@@ -77,6 +77,30 @@ class StageData {
 
 	public static function vanillaSongStage(songName):String
 	{
+		switch(songName)
+		{
+			case 'spookeez' | 'south' | 'monster':
+				return 'spooky';
+			case 'pico' | 'philly-nice' | 'blammed':
+			    return 'phillyTrain';
+			case 'satin-panties' | 'high' | 'milf':
+			    return 'limo';
+			case 'cocoa' | 'eggnog':
+			    return 'mallXmas';
+			case 'winter-horrorland':
+				return 'mallEvil';
+			case 'senpai' | 'roses':
+				return 'school';
+			case 'thorns':
+				return 'schoolEvil';
+			case 'ugh' | 'guns' | 'stress':
+				return 'tankmanBattlefield';
+			case 'darnell' | 'lit-up' | '2hot':
+				return 'phillyStreets';
+			case "blazin":
+				return 'phillyBlazin';
+		}
+
 		return 'stage';
 	}
 

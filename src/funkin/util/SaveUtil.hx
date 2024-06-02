@@ -11,6 +11,14 @@ class SaveUtil
         return scoreSave;
     }
 
+    public static function chart():FlxSave
+    {
+        var chartSave:FlxSave = new FlxSave();
+        chartSave.bind('chart_autosaves', CoolUtil.getSavePath());
+
+        return chartSave;
+    }
+
     public static function gj():FlxSave
     {
         var gjSave:FlxSave = new FlxSave();
@@ -51,6 +59,12 @@ class SaveUtil
         if(gj().data != null)
             try {
                 gj().flush();
+            } catch(e)
+                trace('lol $e');
+
+        if(chart().data != null)
+            try {
+                chart().flush();
             } catch(e)
                 trace('lol $e');
 

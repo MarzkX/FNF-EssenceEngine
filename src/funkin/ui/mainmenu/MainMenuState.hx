@@ -1,6 +1,6 @@
 package funkin.ui.mainmenu;
 
-import engine.objects.ParallaxSprite;
+import funkin.ui.transition.Stickers.StickerSubState;
 import flixel.FlxObject;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
@@ -11,18 +11,17 @@ import engine.options.OptionsState;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineVersion:String = '0.7.3'; // This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
-	var optionShit:Array<String> = [
-		'story_mode',
-		'freeplay',
-		#if MODS_ALLOWED 'mods', #end
-		#if ACHIEVEMENTS_ALLOWED 'awards', #end
-		'credits',
-		'options'
+	var itemShit:Array<Dynamic> = [
+		['story_mode', () -> new StoryMenuState()],
+		['freeplay', () -> new FreeplayState()],
+		#if ACHIEVEMENTS_ALLOWED ['awards', () -> new AchievementsMenuState()], #end
+		['credits', () -> new CreditsState()],
+		['options', () -> new OptionsState()],
+		#if MODS_ALLOWED ['addons', () -> new ModsMenuState()] #end
 	];
 
 	var magenta:FlxSprite;
@@ -45,8 +44,8 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80, 0).loadGraphic(Paths.image('menuBG'));
+		var yScroll:Float = Math.max(0.25 - (0.05 * (itemShit.length - 4)), 0.1);
+		var bg:FlxSprite = new FlxSprite(-80, 0).loadGraphic(PathImage.menu('menuBG'));
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
@@ -57,7 +56,7 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		magenta = new FlxSprite(-80).loadGraphic(PathImage.menu('menuBGMagenta'));
 		magenta.antialiasing = ClientPrefs.data.antialiasing;
 		magenta.scrollFactor.set(0, yScroll);
 		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
@@ -70,21 +69,21 @@ class MainMenuState extends MusicBeatState
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
-		for (i in 0...optionShit.length)
+		for (i in 0...itemShit.length)
 		{
-			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
+			var offset:Float = 108 - (Math.max(itemShit.length, 4) - 4) * 80;
 			var menuItem:FlxSprite = new FlxSprite(0, (i * 140) + offset);
 			menuItem.antialiasing = ClientPrefs.data.antialiasing;
-			menuItem.frames = Paths.getSparrowAtlas('mainmenu/' + optionShit[i]);
-			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
-			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
+			menuItem.frames = PathAtlas.sparrow(PathStr.MENU_MAIN_PATH + itemShit[i][0]);
+			menuItem.animation.addByPrefix('idle', itemShit[i][0] + " basic", 24);
+			menuItem.animation.addByPrefix('selected', itemShit[i][0] + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
 			if(menuItem.ID == 4)
 				menuItem.scale.set(0.95, 0.95);
 			menuItems.add(menuItem);
-			var scr:Float = (optionShit.length - 4) * 0.135;
-			if (optionShit.length < 6)
+			var scr:Float = (itemShit.length - 4) * 0.135;
+			if (itemShit.length < 6)
 				scr = 0;
 			menuItem.scrollFactor.set(0, scr);
 			menuItem.updateHitbox();
@@ -94,10 +93,10 @@ class MainMenuState extends MusicBeatState
 		var customVer:FlxText = new FlxText(12, FlxG.height - 24, 0, '', 12);
 		customVer.scrollFactor.set();
 		customVer.setFormat(Paths.font('vcr.ttf'), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		customVer.text = 'Essence Engine v${Main.engineVersion}';
+		customVer.text = 'Essence Engine v${Constants.ENGINE_VERSION}';
 		add(customVer);
 
-		changeItem(curSelected, false);
+		changeItem(0, false);
 
 		#if ACHIEVEMENTS_ALLOWED
 		// Unlocks "Freaky on a Friday Night" achievement if it's a Friday and between 18:00 PM and 23:59 PM
@@ -109,6 +108,14 @@ class MainMenuState extends MusicBeatState
 		Achievements.reloadList();
 		#end
 		#end
+
+		OptionsState.onPlayState = false;
+		if (PlayState.SONG != null)
+		{
+			PlayState.SONG.arrowSkin = null;
+			PlayState.SONG.splashSkin = null;
+			PlayState.stageUI = 'normal';
+		}
 
 		super.create();
 
@@ -126,6 +133,7 @@ class MainMenuState extends MusicBeatState
 				FreeplayState.vocals.volume += 0.5 * elapsed;
 		}
 
+		//yes this possible to optimize this code... but imma lazy))))))))))))))))
 		if (!selectedSomethin)
 		{
 			if (controls.UI_UP_P)
@@ -134,58 +142,24 @@ class MainMenuState extends MusicBeatState
 			if (controls.UI_DOWN_P)
 				changeItem(1);
 
-			//if (FlxG.keys.justPressed.ALT)
-			//{
-			//	selectedSomethin = true;
-			//	state(new ExtrasState());
-			//}
-
 			if (controls.BACK)
 			{
 				selectedSomethin = true;
-				FlxG.sound.play(Paths.sound('cancelMenu'));
-				state(new TitleState());
+				FlxG.sound.play(PathSound.file('cancelMenu'));
+				state(() -> new TitleState());
 			}
 
 			if (controls.ACCEPT)
 			{
-				FlxG.sound.play(Paths.sound('confirmMenu'));
+				FlxG.sound.play(PathSound.file('confirmMenu'));
 				selectedSomethin = true;
 
 				if (ClientPrefs.data.flashing)
 					FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
-				FlxFlicker.flicker(menuItems.members[curSelected], 1, 0.06, false, false, function(flick:FlxFlicker)
+				FlxFlicker.flicker(menuItems.members[curSelected], 1, 0.06, false, false, (flick:FlxFlicker) ->
 				{
-					switch (optionShit[curSelected])
-					{
-						case 'story_mode':
-							state(() -> new StoryMenuState());
-						case 'freeplay':
-							state(() -> new FreeplayState());
-
-						#if MODS_ALLOWED
-						case 'mods':
-							state(() -> new ModsMenuState());
-						#end
-
-						#if ACHIEVEMENTS_ALLOWED
-						case 'awards':
-							state(() -> new AchievementsMenuState());
-						#end
-
-						case 'credits':
-							state(() -> new CreditsState());
-						case 'options':
-							state(() -> new OptionsState());
-							OptionsState.onPlayState = false;
-							if (PlayState.SONG != null)
-							{
-								PlayState.SONG.arrowSkin = null;
-								PlayState.SONG.splashSkin = null;
-								PlayState.stageUI = 'normal';
-							}
-					}
+					state(itemShit[curSelected][1]);
 				});
 
 				for (i in 0...menuItems.members.length)
@@ -194,7 +168,7 @@ class MainMenuState extends MusicBeatState
 						continue;
 					FlxTween.tween(menuItems.members[i], {alpha: 0}, 0.4, {
 						ease: FlxEase.quadOut,
-						onComplete: function(twn:FlxTween)
+						onComplete: (twn:FlxTween) ->
 						{
 							menuItems.members[i].kill();
 						}
@@ -216,7 +190,7 @@ class MainMenuState extends MusicBeatState
 	function changeItem(huh:Int = 0, ?playSound = true)
 	{
 		if(playSound)
-			FlxG.sound.play(Paths.sound('scrollMenu'));
+			FlxG.sound.play(PathSound.file('scrollMenu'));
 
 		menuItems.members[curSelected].animation.play('idle');
 		menuItems.members[curSelected].updateHitbox();

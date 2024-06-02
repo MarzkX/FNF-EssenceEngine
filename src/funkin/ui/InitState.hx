@@ -1,10 +1,13 @@
 package funkin.ui;
 
+import openfl.display.BitmapData;
+import flixel.graphics.FlxGraphic;
 import funkin.util.WindowsUtil as WinStuff;
 import flixel.addons.display.FlxSpriteAniRot;
 import flixel.effects.FlxFlicker;
 import flixel.util.FlxGradient;
 import funkin.backend.Highscore;
+import openfl.utils.Assets;
 import flixel.ui.FlxBar;
 
 class InitState extends MusicBeatState
@@ -23,19 +26,16 @@ class InitState extends MusicBeatState
 		FlxG.game.focusLostFramerate = 60;
 		FlxG.keys.preventDefaultKeys = [TAB];
         FlxG.mouse.visible = false;
-        FlxSprite.defaultAntialiasing = true;
         
         persistentUpdate = true;
         persistentDraw = true;
 
         //For Other
-        var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        var bg:FlxSprite = new FlxSprite().loadGraphic(PathImage.def_bg());
         bg.color = 0x181818;
-        bg.antialiasing = true;
         add(bg);
 
         var gradient:FlxSprite = FlxGradient.createGradientFlxSprite(FlxG.width, 800, [0x00000000, 0xFF000000], 1, 90);
-        gradient.antialiasing = true;
         gradient.scrollFactor.set();
         add(gradient);
 
@@ -44,17 +44,15 @@ class InitState extends MusicBeatState
         bar.createFilledBar(0xC4FFFFFF, 0xC4000000, true, FlxColor.WHITE);
         add(bar);
 
-        var lode:FlxSprite = new FlxSprite(2, FlxG.height - 35).loadGraphic(Paths.image('loadingbar'));
-        lode.antialiasing = true;
+        var lode:FlxSprite = new FlxSprite(2, FlxG.height - 35).loadGraphic(FlxGraphic.fromBitmapData(Assets.getBitmapData(Paths.file('loading/bar.png', IMAGE, 'ingame'))));
         add(lode);
 
         loaded_text = new FlxText(52, FlxG.height - 65, 500, '', 16);
         loaded_text.setFormat(Paths.font('vcr.ttf'), 20, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         add(loaded_text);
 
-        spin = new FlxSprite(-12.5, FlxG.height - 90).loadGraphic(Paths.image('spinner'));
-        spin.antialiasing = true;
-        spin.scale.set(0.4, 0.4);
+        spin = new FlxSprite(-12.5, FlxG.height - 90).loadGraphic(FlxGraphic.fromBitmapData(Assets.getBitmapData(Paths.file('loading/spinner.png', IMAGE, 'ingame'))));
+        spin.setGraphicSize(Std.int(spin.width*0.4));
         FlxTween.tween(spin, {angle: 360}, 0.8, {type: LOOPING});
         add(spin);
 
@@ -143,7 +141,11 @@ class InitState extends MusicBeatState
         new FlxTimer().start(1, function(T:FlxTimer)
         {
             T = null;
-            state(new StartingState());
+            #if html5
+            state(() -> new StartingState());
+            #else
+            state(() -> new TitleState());
+            #end
         });
     }
 }
@@ -156,7 +158,16 @@ class StartingState extends MusicBeatState
     {
         super.create();
 
-        lol = new FlxSprite().loadGraphic(Paths.image('start'));
+        var bg:FlxSprite = new FlxSprite().loadGraphic(PathImage.def_bg());
+        bg.color = 0x181818;
+        bg.antialiasing = ClientPrefs.data.antialiasing;
+        add(bg);
+
+        var gradient:FlxSprite = FlxGradient.createGradientFlxSprite(FlxG.width, 800, [0x00000000, 0xFF000000], 1, 90);
+        gradient.scrollFactor.set();
+        add(gradient);
+
+        lol = new FlxSprite().loadGraphic(FlxGraphic.fromBitmapData(Assets.getBitmapData(Paths.file('loading/start.png', IMAGE, 'ingame'))));
         lol.screenCenter();
         lol.antialiasing = ClientPrefs.data.antialiasing;
         add(lol);
@@ -183,11 +194,11 @@ class StartingState extends MusicBeatState
 
                 lel++;
                 if(lel == 1)
-                    FlxG.sound.play(Paths.sound('scrollMenu'));
+                    FlxG.sound.play(PathSound.file('scrollMenu'));
 
                 if(FlxG.mouse.justPressed)
                 {
-                    FlxG.sound.play(Paths.sound('confirmMenu'));
+                    FlxG.sound.play(PathSound.file('confirmMenu'));
                     FlxFlicker.flicker(lol, 1, 0.06, false, false, function(flick:FlxFlicker)
                     {
                         state(new TitleState()); 
@@ -216,7 +227,7 @@ class StartingState extends MusicBeatState
 
             if(controls.ACCEPT)
             {
-                FlxG.sound.play(Paths.sound('confirmMenu'));
+                FlxG.sound.play(PathSound.file('confirmMenu'));
                 FlxFlicker.flicker(lol, 1, 0.06, false, false, function(flick:FlxFlicker)
                 {
                     state(new TitleState()); 

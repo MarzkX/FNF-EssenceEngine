@@ -15,7 +15,7 @@ class Rating
 	public function new(name:String)
 	{
 		this.name = name;
-		this.image = name;
+		this.image = PathStr.GAME_PATH + name;
 		this.hitWindow = 0;
 
 		var window:String = name + 'Window';

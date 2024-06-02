@@ -73,14 +73,14 @@ class ScreenshotPlugin extends FlxBasic
     onPostScreenshot = new FlxTypedSignal<Bitmap->Void>();
   }
 
+  var idkTimer:FlxTimer;
+
   public override function update(elapsed:Float):Void
   {
     super.update(elapsed);
 
     if (hasPressedScreenshot())
-    {
-      capture();
-    }
+      timerStart();
   }
 
   /**
@@ -93,9 +93,9 @@ class ScreenshotPlugin extends FlxBasic
         flashColor: ClientPrefs.data.flashing ? FlxColor.WHITE : null, // Was originally a black flash.
 
         // TODO: Add a way to configure screenshots from the options menu.
-        hotkeys: [FlxKey.F3],
-        shouldHideMouse: false,
-        fancyPreview: true,
+        hotkeys: [FlxKey.F12],
+        shouldHideMouse: true,
+        fancyPreview: false,
       }));
   }
 
@@ -116,6 +116,21 @@ class ScreenshotPlugin extends FlxBasic
   public function defineCaptureRegion(x:Int, y:Int, width:Int, height:Int):Void
   {
     _region = new Rectangle(x, y, width, height);
+  }
+
+  public function timerStart():Void
+  {
+    if(idkTimer != null)
+      idkTimer.cancel();
+
+    idkTimer = new FlxTimer().start(1, function(t:FlxTimer)
+    {
+      t = null;
+
+      capture();
+    });
+
+    return;
   }
 
   /**
@@ -172,10 +187,10 @@ class ScreenshotPlugin extends FlxBasic
     FlxTween.tween(flashSpr, {alpha: 0}, 0.15, {ease: FlxEase.quadOut, onComplete: _ -> FlxG.stage.removeChild(flashSpr)});
 
     // Play a sound (auto-play is true).
-    FlxG.sound.play(Paths.file('screenshot.${Paths.SOUND_EXT}', SOUND, 'ingame'));
+    FlxG.sound.play(PathFile.file('screenshot.${Paths.SOUND_EXT}', SOUND, 'ingame'));
   }
 
-  static final PREVIEW_INITIAL_DELAY = 0.25; // How long before the preview starts fading in.
+  static final PREVIEW_INITIAL_DELAY = 0.2; // How long before the preview starts fading in.
   static final PREVIEW_FADE_IN_DURATION = 0.3; // How long the preview takes to fade in.
   static final PREVIEW_FADE_OUT_DELAY = 1.25; // How long the preview stays on screen.
   static final PREVIEW_FADE_OUT_DURATION = 0.3; // How long the preview takes to fade out.

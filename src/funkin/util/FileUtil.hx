@@ -1,5 +1,6 @@
 package funkin.util;
 
+import haxe.zip.Writer;
 import haxe.zip.Entry;
 import lime.utils.Bytes;
 import lime.ui.FileDialog;
@@ -580,6 +581,8 @@ class FileUtil
     var o:haxe.io.BytesOutput = new haxe.io.BytesOutput();
     //var zipWriter:haxe.zip.Writer = new haxe.zip.Writer(o);
     //zipWriter.write(entries.push());
+    var zipWriter:Writer = new Writer(o);
+    zipWriter.writeEntryHeader(entries.pop());
     return o.getBytes();
   }
 

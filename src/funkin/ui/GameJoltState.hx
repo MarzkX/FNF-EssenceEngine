@@ -23,6 +23,7 @@ class GameJoltState extends MusicBeatState
         super();
     }
 
+    var logo:FlxSprite;
     var blank:FlxSprite;
     var user_box:FlxUIInputText;
     var token_box:FlxUIInputText;
@@ -37,7 +38,7 @@ class GameJoltState extends MusicBeatState
 
         Cursor.show();
 
-        var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        var bg:FlxSprite = new FlxSprite().loadGraphic(PathImage.def_bg());
         bg.antialiasing = ClientPrefs.data.antialiasing;
         bg.setGraphicSize(FlxG.width, FlxG.height);
         bg.updateHitbox();
@@ -58,7 +59,7 @@ class GameJoltState extends MusicBeatState
 		FlxTween.tween(grid, {alpha: 1}, 0.5, {ease: FlxEase.quadOut});
 		add(grid);
 
-        var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo', 'gamejolt', ClientPrefs.data.cacheOnGPU));
+        logo = new FlxSprite().loadGraphic(Paths.image('logo', 'gamejolt', ClientPrefs.data.cacheOnGPU));
         logo.setGraphicSize(FlxG.width, FlxG.height);
         logo.antialiasing = false;
         logo.updateHitbox();
@@ -98,18 +99,16 @@ class GameJoltState extends MusicBeatState
             boxBG2.x = token_box.x - 5;
             boxBG2.y = token_box.y - 5;
         
-            log_butt = RoundRect.rect(new FlxSprite().makeGraphic(Std.int((blank.width/3)-50), 50, FlxColor.TRANSPARENT), (blank.width/3)-50, 50, 12.5, 12.5, 0xFF16CF35);
+            log_butt = RoundRect.rect(new FlxSprite().makeGraphic(Std.int((blank.width/3)-50), 50, FlxColor.TRANSPARENT), (blank.width/3)-50, 50, 12.5, 12.5, FlxColor.LIME);
             log_butt.screenCenter();
             log_butt.alpha = 0.6;
-            log_butt.color = FlxColor.LIME;
             log_butt.y += 75;
             add(log_butt);
         
-            get_butt = RoundRect.rect(new FlxSprite().makeGraphic(Std.int((blank.width/3)-50), 50, FlxColor.TRANSPARENT), (blank.width/3)-50, 50, 12.5, 12.5, 0xFFCF8516);
+            get_butt = RoundRect.rect(new FlxSprite().makeGraphic(Std.int((blank.width/3)-50), 50, FlxColor.TRANSPARENT), (blank.width/3)-50, 50, 12.5, 12.5, FlxColor.YELLOW);
             get_butt.screenCenter();
             get_butt.x -= (blank.width/3)-35;
             get_butt.alpha = 0.6;
-            get_butt.color = 0xFFD000;
             get_butt.y += 150;
             add(get_butt);
         
@@ -117,7 +116,7 @@ class GameJoltState extends MusicBeatState
             create_butt.screenCenter();
             create_butt.x += (blank.width/3)-35;
             create_butt.alpha = 0.6;
-            create_butt.color = 0xA8A8A8;
+            create_butt.color = 0xFF537A6D;
             create_butt.y += 150;
             add(create_butt);
         }
@@ -154,8 +153,11 @@ class GameJoltState extends MusicBeatState
                         state(() -> new OptionsState());
                     } else
                         state(() -> new MainMenuState());
-                    FlxG.sound.play(Paths.sound('cancelMenu'));
+                    FlxG.sound.play(PathSound.file('cancelMenu'));
                 }
+
+                if(FlxG.mouse.overlaps(logo) && FlxG.mouse.justPressed)
+                    CoolUtil.browserLoad(Constants.URL_GAME);
 
                 if(FlxG.mouse.overlaps(log_butt) || FlxG.mouse.overlaps(get_butt) || FlxG.mouse.overlaps(create_butt))
                     Cursor.cursorMode = Pointer;
@@ -166,17 +168,17 @@ class GameJoltState extends MusicBeatState
                 {
                     num1_select++;
                     if(num1_select == 1)
-                        FlxG.sound.play(Paths.sound('scrollMenu'), 0.7);
+                        FlxG.sound.play(PathSound.file('scrollMenu'), 0.7);
                     log_butt.alpha = 1;
 
                     if(FlxG.mouse.justPressed)
                     {
                         if(user_box.text != null && user_box.text != '' && token_box.text != null && token_box.text != '') {
                             GJClient.authDaUser(user_box.text, token_box.text, true);
-                            FlxG.sound.play(Paths.sound('confirmMenu'));
+                            FlxG.sound.play(PathSound.file('confirmMenu'));
                         } else {
                             trace('USER && TOKEN WITHOUT TEXT\'S!');
-                            FlxG.sound.play(Paths.sound('cancelMenu'));
+                            FlxG.sound.play(PathSound.file('cancelMenu'));
                         }
                     }
                 }
@@ -190,13 +192,13 @@ class GameJoltState extends MusicBeatState
                 {
                     num2_select++;
                     if(num2_select == 1)
-                        FlxG.sound.play(Paths.sound('scrollMenu'), 0.7);
+                        FlxG.sound.play(PathSound.file('scrollMenu'), 0.7);
                     get_butt.alpha = 1;
 
                     if(FlxG.mouse.justPressed)
                     {
                         CoolUtil.browserLoad('https://youtu.be/Zod80sfysMc');
-                        FlxG.sound.play(Paths.sound('cancelMenu'),0.7);
+                        FlxG.sound.play(PathSound.file('cancelMenu'),0.7);
                     }
                 }
                 else
@@ -209,13 +211,13 @@ class GameJoltState extends MusicBeatState
                 {
                     num3_select++;
                     if(num3_select == 1)
-                        FlxG.sound.play(Paths.sound('scrollMenu'), 0.7);
+                        FlxG.sound.play(PathSound.file('scrollMenu'), 0.7);
                     create_butt.alpha = 1;
 
                     if(FlxG.mouse.justPressed)
                     {
                         CoolUtil.browserLoad('https://gamejolt.com/discover');
-                        FlxG.sound.play(Paths.sound('cancelMenu'),0.7);
+                        FlxG.sound.play(PathSound.file('cancelMenu'),0.7);
                     }
                 }
                 else
@@ -234,7 +236,7 @@ class GameJoltState extends MusicBeatState
                         state(() -> new OptionsState());
                     } else
                         state(() -> new MainMenuState());
-                    FlxG.sound.play(Paths.sound('cancelMenu'));
+                    FlxG.sound.play(PathSound.file('cancelMenu'));
                 }
             }
         }

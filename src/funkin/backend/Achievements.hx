@@ -3,7 +3,6 @@ package funkin.backend;
 #if ACHIEVEMENTS_ALLOWED
 import funkin.ui.awards.AchievementPopup;
 import haxe.Exception;
-import haxe.Json;
 
 #if LUA_ALLOWED
 import engine.psychlua.FunkinLua;
@@ -28,7 +27,6 @@ typedef Achievement =
 class Achievements {
 	public static function init()
 	{
-		//for gjid dont forget about "#if GAMEJOLT_ALLOWED #end"
 		createAchievement('friday_night_play',		{name: "Freaky on a Friday Night", description: "Play on a Friday... Night.", hidden: true});
 		createAchievement('ur_bad',					{name: "What a Funkin' Disaster!", description: "Complete a Song with a rating lower than 20%."});
 		createAchievement('ur_good',				{name: "Perfectionist", description: "Complete a Song with a rating of 100%."});
@@ -138,6 +136,13 @@ class Achievements {
 		trace('Completed achievement "$name"');
 		achievementsUnlocked.push(name);
 
+		#if GAMEJOLT_ALLOWED
+		if(get(name).gjID != null)
+		{
+			GJClient.getTrophy(get(name).gjID);
+		}
+		#end
+
 		// earrape prevention
 		var time:Int = openfl.Lib.getTimer();
 		if(Math.abs(time - _lastUnlock) >= 100) //If last unlocked happened in less than 100 ms (0.1s) ago, then don't play sound
@@ -176,6 +181,10 @@ class Achievements {
 	// Map sorting cuz haxe is physically incapable of doing that by itself
 	static var _sortID = 0;
 	static var _originalLength = -1;
+
+	/**
+	* for "gjID:" dont forget about "#if GAMEJOLT_ALLOWED #end"
+	*/
 	public static function createAchievement(name:String, data:Achievement, ?mod:String = null)
 	{
 		data.ID = _sortID;
@@ -201,7 +210,7 @@ class Achievements {
 		for (i => mod in Mods.parseList().enabled)
 		{
 			Mods.currentModDirectory = mod;
-			loadAchievementJson(Paths.mods('$mod/data/jsonData/achievements.json'));
+			loadAchievementJson(Paths.mods('${Mods.currentModDirectory}/data/jsonData/achievements.json'));
 		}
 		Mods.currentModDirectory = modLoaded;
 	}
@@ -212,7 +221,7 @@ class Achievements {
 		if(FileSystem.exists(path)) {
 			try {
 				var rawJson:String = File.getContent(path).trim();
-				if(rawJson != null && rawJson.length > 0) retVal = tjson.TJSON.parse(rawJson); //Json.parse('{"achievements": $rawJson}').achievements;
+				if(rawJson != null && rawJson.length > 0) retVal = haxe.Json.parse(rawJson); //Json.parse('{"achievements": $rawJson}').achievements;
 				
 				if(addMods && retVal != null)
 				{

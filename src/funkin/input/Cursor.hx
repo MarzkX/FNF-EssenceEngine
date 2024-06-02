@@ -48,7 +48,7 @@ class Cursor
 
   public static final CURSOR_DEFAULT_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/default.png",
+      graphic: PathStr.CURSOR_PATH+"default.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -57,7 +57,7 @@ class Cursor
 
   public static final CURSOR_CROSS_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/cross.png",
+      graphic: PathStr.CURSOR_PATH+"cross.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -66,7 +66,7 @@ class Cursor
 
   public static final CURSOR_ERASER_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/eraser.png",
+      graphic: PathStr.CURSOR_PATH+"eraser.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -75,7 +75,7 @@ class Cursor
 
   public static final CURSOR_GRABBING_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/grabbing.png",
+      graphic: PathStr.CURSOR_PATH+"grabbing.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -84,7 +84,7 @@ class Cursor
 
   public static final CURSOR_HOURGLASS_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/hourglass.png",
+      graphic: PathStr.CURSOR_PATH+"hourglass.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -93,7 +93,7 @@ class Cursor
 
   public static final CURSOR_POINTER_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/pointer.png",
+      graphic: PathStr.CURSOR_PATH+"pointer.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -102,7 +102,7 @@ class Cursor
 
   public static final CURSOR_TEXT_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/text.png",
+      graphic: PathStr.CURSOR_PATH+"text.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -111,7 +111,7 @@ class Cursor
 
   public static final CURSOR_TEXT_VERTICAL_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/text-vertical.png",
+      graphic: PathStr.CURSOR_PATH+"text-vertical.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -120,7 +120,7 @@ class Cursor
 
   public static final CURSOR_ZOOM_IN_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/zoom-in.png",
+      graphic: PathStr.CURSOR_PATH+"zoom-in.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -129,7 +129,7 @@ class Cursor
 
   public static final CURSOR_ZOOM_OUT_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/zoom-out.png",
+      graphic: PathStr.CURSOR_PATH+"zoom-out.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -138,7 +138,7 @@ class Cursor
 
   public static final CURSOR_CROSSHAIR_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/crosshair.png",
+      graphic: PathStr.CURSOR_PATH+"crosshair.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -147,7 +147,7 @@ class Cursor
 
   public static final CURSOR_CELL_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/cell.png",
+      graphic: PathStr.CURSOR_PATH+"cell.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,
@@ -156,7 +156,7 @@ class Cursor
 
   public static final CURSOR_SCROLL_PARAMS:CursorParams =
     {
-      graphic: "funkin/images/cursor/scroll.png",
+      graphic: PathStr.CURSOR_PATH+"scroll.png",
       scale: 1.0,
       offsetX: 0,
       offsetY: 0,

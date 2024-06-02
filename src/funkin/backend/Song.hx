@@ -19,6 +19,7 @@ typedef SwagSong =
 	var gfVersion:String;
 	var stage:String;
 
+	@:optional var author:String;
 	@:optional var gameOverChar:String;
 	@:optional var gameOverSound:String;
 	@:optional var gameOverLoop:String;
@@ -32,6 +33,7 @@ typedef SwagSong =
 	@:optional var charTrails:Bool;
 
 	@:optional var arrowSkin:String;
+	@:optional var strumSkin:String;
 	@:optional var splashSkin:String;
 }
 
@@ -43,7 +45,9 @@ class Song
 	public var bpm:Float;
 	public var needsVoices:Bool = true;
 	public var arrowSkin:String;
+	public var strumSkin:String;
 	public var splashSkin:String;
+	public var author:String;
 	public var gameOverChar:String;
 	public var gameOverSound:String;
 	public var gameOverLoop:String;

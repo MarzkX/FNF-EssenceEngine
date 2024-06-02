@@ -1,5 +1,6 @@
 package funkin.ui.ingame;
 
+import funkin.ui.transition.Stickers.StickerSubState;
 import funkin.backend.WeekData;
 import funkin.backend.Highscore;
 import funkin.backend.Song;
@@ -15,7 +16,13 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Options', 'Exit to menu'];
+	var menuItemsOG:Array<String> = [
+		'Resume', 
+		'Restart Song', 
+		'Change Difficulty', 
+		'Options', 
+		'Exit to menu'
+	];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
@@ -76,19 +83,19 @@ class PauseSubState extends MusicBeatSubstate
 		bg.scrollFactor.set();
 		add(bg);
 
-		var levelInfo:FlxText = new FlxText(20, 15, 0, PlayState.SONG.song, 32);
+		var levelInfo:FlxText = new FlxText(20, 15, 0, PlayState.SONG.song + " - " + (PlayState.SONG.author != null ? PlayState.SONG.author : 'Kawai Sprite'), 32);
 		levelInfo.scrollFactor.set();
 		levelInfo.setFormat(Paths.font("vcr.ttf"), 32);
 		levelInfo.updateHitbox();
 		add(levelInfo);
 
-		var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, Difficulty.getString().toUpperCase(), 32);
+		var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, "Difficulty: " + Difficulty.getString().toUpperCase(), 32);
 		levelDifficulty.scrollFactor.set();
 		levelDifficulty.setFormat(Paths.font('vcr.ttf'), 32);
 		levelDifficulty.updateHitbox();
 		add(levelDifficulty);
 
-		var blueballedTxt:FlxText = new FlxText(20, 15 + 64, 0, "Blueballed: " + PlayState.deathCounter, 32);
+		var blueballedTxt:FlxText = new FlxText(20, 15 + 64, 0, PlayState.deathCounter + ' Blue Balls', 32);
 		blueballedTxt.scrollFactor.set();
 		blueballedTxt.setFormat(Paths.font('vcr.ttf'), 32);
 		blueballedTxt.updateHitbox();
@@ -187,13 +194,13 @@ class PauseSubState extends MusicBeatSubstate
 			case 'Skip Time':
 				if (controls.UI_LEFT_P)
 				{
-					FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+					FlxG.sound.play(PathSound.file('scrollMenu'), 0.4);
 					curTime -= 1000;
 					holdTime = 0;
 				}
 				if (controls.UI_RIGHT_P)
 				{
-					FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+					FlxG.sound.play(PathSound.file('scrollMenu'), 0.4);
 					curTime += 1000;
 					holdTime = 0;
 				}
@@ -238,7 +245,7 @@ class PauseSubState extends MusicBeatSubstate
 					missingText.screenCenter(Y);
 					missingText.visible = true;
 					missingTextBG.visible = true;
-					FlxG.sound.play(Paths.sound('cancelMenu'));
+					FlxG.sound.play(PathSound.file('cancelMenu'));
 
 					super.update(elapsed);
 					return;
@@ -304,17 +311,16 @@ class PauseSubState extends MusicBeatSubstate
 					}
 					OptionsState.onPlayState = true;
 				case "Exit to menu":
-					#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
 
 					Mods.loadTopMod();
-					if(PlayState.isStoryMode)
+					if(PlayState.isStoryMode)//openSubState(new StickerSubState(() -> new StoryMenuState()));
 						state(() -> new StoryMenuState());
-					else 
+					else//openSubState(new StickerSubState(() -> new FreeplayState()));
 						state(() -> new FreeplayState());
 
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					FlxG.sound.playMusic(PathMusic.def());
 					PlayState.changedDifficulty = false;
 					PlayState.chartingMode = false;
 					FlxG.camera.followLerp = 0;
@@ -359,7 +365,7 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		curSelected += change;
 
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(PathSound.file('scrollMenu'), 0.4);
 
 		if (curSelected < 0)
 			curSelected = menuItems.length - 1;

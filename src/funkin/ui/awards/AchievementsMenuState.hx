@@ -40,7 +40,7 @@ class AchievementsMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(PathImage.menu('menuBGBlue'));
 		menuBG.antialiasing = ClientPrefs.data.antialiasing;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
@@ -59,7 +59,7 @@ class AchievementsMenuState extends MusicBeatState
 			if(option.unlocked)
 			{
 				#if MODS_ALLOWED Mods.currentModDirectory = option.mod; #end
-				var image:String = 'achievements/' + option.name;
+				var image:String = 'ui/achievements/' + option.name;
 				if(Paths.fileExists('images/$image-pixel.png', IMAGE))
 				{
 					graphic = Paths.image('$image-pixel');
@@ -67,9 +67,9 @@ class AchievementsMenuState extends MusicBeatState
 				}
 				else graphic = Paths.image(image);
 
-				if(graphic == null) graphic = Paths.image('unknownMod');
+				if(graphic == null) graphic = PathImage.menu('addons/unknownMod');
 			}
-			else graphic = Paths.image('achievements/lockedachievement');
+			else graphic = Paths.image('ui/achievements/lockedachievement');
 
 			var spr:FlxSprite = new FlxSprite(0, Math.floor(grpOptions.members.length / MAX_PER_ROW) * 180).loadGraphic(graphic);
 			spr.scrollFactor.x = 0;
@@ -205,7 +205,7 @@ class AchievementsMenuState extends MusicBeatState
 		}
 
 		if (controls.BACK) {
-			FlxG.sound.play(Paths.sound('cancelMenu'));
+			FlxG.sound.play(PathSound.file('cancelMenu'));
 			state(() -> new MainMenuState());
 			goingBack = true;
 		}
@@ -215,7 +215,7 @@ class AchievementsMenuState extends MusicBeatState
 	public var barTween:FlxTween = null;
 	function _changeSelection()
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'));
+		FlxG.sound.play(PathSound.file('scrollMenu'));
 		var hasProgress = options[curSelected].maxProgress > 0;
 		nameText.text = options[curSelected].displayName;
 		descText.text = options[curSelected].description;
@@ -230,8 +230,8 @@ class AchievementsMenuState extends MusicBeatState
 			progressTxt.text = CoolUtil.floorDecimal(val1, options[curSelected].decProgress) + ' / ' + CoolUtil.floorDecimal(val2, options[curSelected].decProgress);
 
 			barTween = FlxTween.tween(progressBar, {percent: (val1 / val2) * 100}, 0.5, {ease: FlxEase.quadOut,
-				onComplete: function(twn:FlxTween) progressBar.updateBar(),
-				onUpdate: function(twn:FlxTween) progressBar.updateBar()
+				onComplete: (twn:FlxTween) -> progressBar.updateBar(),
+				onUpdate: (twn:FlxTween) -> progressBar.updateBar()
 			});
 		}
 		else progressBar.percent = 0;
@@ -244,7 +244,7 @@ class AchievementsMenuState extends MusicBeatState
 		}
 		else camFollow.setPosition(0, grpOptions.members[curSelected].getGraphicMidpoint().y - 100);
 
-		grpOptions.forEach(function(spr:FlxSprite) {
+		grpOptions.forEach((spr:FlxSprite) -> {
 			spr.alpha = 0.6;
 			if(spr.ID == curSelected) spr.alpha = 1;
 		});
@@ -298,7 +298,7 @@ class ResetAchievementSubstate extends MusicBeatSubstate
 		if(controls.BACK)
 		{
 			close();
-			FlxG.sound.play(Paths.sound('cancelMenu'));
+			FlxG.sound.play(PathSound.file('cancelMenu'));
 			return;
 		}
 
@@ -329,14 +329,14 @@ class ResetAchievementSubstate extends MusicBeatSubstate
 				{
 					if(state.barTween != null) state.barTween.cancel();
 					state.barTween = FlxTween.tween(state.progressBar, {percent: 0}, 0.5, {ease: FlxEase.quadOut,
-						onComplete: function(twn:FlxTween) state.progressBar.updateBar(),
-						onUpdate: function(twn:FlxTween) state.progressBar.updateBar()
+						onComplete: (twn:FlxTween) -> state.progressBar.updateBar(),
+						onUpdate: (twn:FlxTween) -> state.progressBar.updateBar()
 					});
 				}
 				Achievements.save();
 				FlxG.save.flush();
 
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxG.sound.play(PathSound.file('cancelMenu'));
 			}
 			close();
 			return;
@@ -352,7 +352,7 @@ class ResetAchievementSubstate extends MusicBeatSubstate
 		yesText.scale.set(scales[confirmInt], scales[confirmInt]);
 		noText.alpha = alphas[1 - confirmInt];
 		noText.scale.set(scales[1 - confirmInt], scales[1 - confirmInt]);
-		FlxG.sound.play(Paths.sound('scrollMenu'));
+		FlxG.sound.play(PathSound.file('scrollMenu'));
 	}
 }
 #end

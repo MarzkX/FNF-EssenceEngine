@@ -26,7 +26,7 @@ class CreditsState extends MusicBeatState
 		#end
 
 		persistentUpdate = true;
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg = new FlxSprite().loadGraphic(PathImage.def_bg());
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		add(bg);
 		bg.screenCenter();
@@ -39,8 +39,11 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var defaultList:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
-			['Custom Engine by'],
-			['Marazak(X)',          'mrzk',             'Programmer/Artist',                                         'https://www.youtube.com/@Mr7kX',      '59E0A8'],
+			['Essence Engine by'],
+			['Marazak(X)',          'mrzk',             'Programmer, Artist, Charter',                               'https://www.youtube.com/@Mr7kX',      '59E0A8'],
+			[''],
+			['Engine Contributors'],
+			['TheGreatOfDude',      'tgod',             'Composer of First Background Song for editors',             'https://www.youtube.com/@thegreatofdude8955',                                    'e4daa4'],
 			[''],
 			[''],
 			['Psych Engine Team'],
@@ -62,14 +65,17 @@ class CreditsState extends MusicBeatState
 			['iFlicky',				'flicky',			'Composer of Psync and Tea Time\nMade the Dialogue Sounds',	 'https://twitter.com/flicky_i',		'9E29CF'],
 			['KadeDev',				'kade',				'Fixed some issues on Chart Editor and Other PRs',			 'https://twitter.com/kade0912',		'64A250'],
 			['superpowers04',		'superpowers04',	'LUA JIT Fork',												 'https://twitter.com/superpowers04',	'B957ED'],
-			['CheemsAndFriends',	'face',	'Creator of FlxAnimate\n(Icon will be added later, merry christmas!)',	 'https://twitter.com/CheemsnFriendos',	'A1A1A1'],
+			['CheemsAndFriends',	'caf',	            'Creator of FlxAnimate',	 'https://twitter.com/CheemsnFriendos',	'A1A1A1'],
 			[''],
 			[''],
 			["Funkin' Crew"],
-			['ninjamuffin99',		'ninjamuffin99',	"Programmer of Friday Night Funkin'",						 'https://twitter.com/ninja_muffin99',	'CF2D2D'],
-			['PhantomArcade',		'phantomarcade',	"Animator of Friday Night Funkin'",							 'https://twitter.com/PhantomArcade3K',	'FADC45'],
-			['evilsk8r',			'evilsk8r',			"Artist of Friday Night Funkin'",							 'https://twitter.com/evilsk8r',		'5ABD4B'],
-			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",							 'https://twitter.com/kawaisprite',		'378FC7']
+			['ninjamuffin99',		'ninjamuffin99',	"Programmer & Co-Director\nof Friday Night Funkin'",		 'https://twitter.com/ninja_muffin99',	'CF2D2D'],
+			['PhantomArcade',		'phantomarcade',	"Art/Animator & Director\nof Friday Night Funkin'",			 'https://twitter.com/PhantomArcade3K',	'FADC45'],
+			['evilsk8r',			'evilsk8r',			"Art Design of Friday Night Funkin'",					     'https://twitter.com/evilsk8r',		'5ABD4B'],
+			['kawaisprite',			'kawaisprite',		"Composer of Friday Night Funkin'",							 'https://twitter.com/kawaisprite',		'378FC7'],
+			[''],
+			["DOWNLOAD"],
+			["Friday Night Funkin'", 'funkin', 'DOWNLOAD AND PLAY IF YOU NOT PLAYING A UPDATE!',                     Constants.URL_ITCH, '413CAE']
 		];
 		
 		for(i in defaultList) {
@@ -92,10 +98,10 @@ class CreditsState extends MusicBeatState
 					Mods.currentModDirectory = creditsStuff[i][5];
 				}
 
-				var str:String = 'credits/missing_icon';
+				var str:String = '${PathStr.MENU_CREDITS_PATH}missing_icon';
 				if(creditsStuff[i][1] != null && creditsStuff[i][1].length > 0)
 				{
-					var fileName = 'credits/' + creditsStuff[i][1];
+					var fileName = PathStr.MENU_CREDITS_PATH + creditsStuff[i][1];
 					if (Paths.fileExists('images/$fileName.png', IMAGE)) str = fileName;
 					else if (Paths.fileExists('images/$fileName-pixel.png', IMAGE)) str = fileName + '-pixel';
 				}
@@ -187,7 +193,7 @@ class CreditsState extends MusicBeatState
 				if(colorTween != null) {
 					colorTween.cancel();
 				}
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxG.sound.play(PathSound.file('cancelMenu'));
 				state(() -> new MainMenuState());
 				quitting = true;
 			}
@@ -216,7 +222,7 @@ class CreditsState extends MusicBeatState
 	var moveTween:FlxTween = null;
 	function changeSelection(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(PathSound.file('scrollMenu'), 0.4);
 		do {
 			curSelected += change;
 			if (curSelected < 0)

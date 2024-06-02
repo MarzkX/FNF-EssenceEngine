@@ -89,7 +89,7 @@ class FreeplayState extends MusicBeatState
 		}
 		Mods.loadTopMod();
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg = new FlxSprite().loadGraphic(PathImage.def_bg());
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		add(bg);
 		bg.screenCenter();
@@ -129,7 +129,7 @@ class FreeplayState extends MusicBeatState
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
 
 		var bgHeight:Int = 66;
-		scoreBG = FlxSpriteUtil.drawRoundRectComplex(new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, bgHeight, FlxColor.TRANSPARENT), 0, 0, 1, bgHeight, 0, 0, 10, 0, FlxColor.BLACK);
+		scoreBG = FlxSpriteUtil.drawRoundRectComplex(new FlxSprite(scoreText.x - 6, 0).makeGraphic(1, bgHeight, FlxColor.TRANSPARENT), 0, 0, 1, bgHeight, 0, 0, 45, 0, FlxColor.BLACK);
 		scoreBG.alpha = 0.6;
 		add(scoreBG);
 
@@ -268,7 +268,7 @@ class FreeplayState extends MusicBeatState
 
 				if(FlxG.mouse.wheel != 0)
 				{
-					FlxG.sound.play(Paths.sound('scrollMenu'), 0.2);
+					FlxG.sound.play(PathSound.file('scrollMenu'), 0.2);
 					changeSelection(-shiftMult * FlxG.mouse.wheel, false);
 				}
 			}
@@ -297,7 +297,7 @@ class FreeplayState extends MusicBeatState
 				player.playingMusic = false;
 				player.switchPlayMusic();
 
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				FlxG.sound.playMusic(PathMusic.def(), 0);
 				FlxTween.tween(FlxG.sound.music, {volume: 1}, 1);
 			}
 			else 
@@ -306,7 +306,7 @@ class FreeplayState extends MusicBeatState
 				if(colorTween != null) {
 					colorTween.cancel();
 				}
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxG.sound.play(PathSound.file('cancelMenu'));
 				state(()->new MainMenuState());
 			}
 		}
@@ -394,7 +394,7 @@ class FreeplayState extends MusicBeatState
 				missingText.screenCenter(Y);
 				missingText.visible = true;
 				missingTextBG.visible = true;
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+				FlxG.sound.play(PathSound.file('cancelMenu'));
 
 				updateTexts(elapsed);
 				super.update(elapsed);
@@ -405,15 +405,12 @@ class FreeplayState extends MusicBeatState
 			FlxG.sound.music.volume = 0;
 					
 			destroyFreeplayVocals();
-			#if (MODS_ALLOWED && DISCORD_ALLOWED)
-			DiscordClient.loadModRPC();
-			#end
 		}
 		else if(controls.RESET && !player.playingMusic)
 		{
 			persistentUpdate = false;
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
-			FlxG.sound.play(Paths.sound('scrollMenu'));
+			FlxG.sound.play(PathSound.file('scrollMenu'));
 		}
 
 		updateTexts(elapsed);
@@ -462,7 +459,7 @@ class FreeplayState extends MusicBeatState
 			return;
 
 		_updateSongLastDifficulty();
-		if(playSound) FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		if(playSound) FlxG.sound.play(PathSound.file('scrollMenu'), 0.4);
 
 		var lastList:Array<String> = Difficulty.list;
 		curSelected += change;
@@ -478,9 +475,9 @@ class FreeplayState extends MusicBeatState
 				colorTween.cancel();
 			}
 			intendedColor = newColor;
-			colorTween = FlxTween.color(bg, 1, bg.color, intendedColor, {
-				onComplete: function(twn:FlxTween) {
-					colorTween = null;
+			colorTween = FlxTween.color(bg, Constants.COLOR_TIMER_TWEEN, bg.color, intendedColor, {
+				onComplete: (twn:FlxTween) -> {
+					twn = null;
 				}
 			});
 		}
@@ -569,7 +566,7 @@ class FreeplayState extends MusicBeatState
 
 		FlxG.autoPause = ClientPrefs.data.autoPause;
 		if (!FlxG.sound.music.playing)
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			FlxG.sound.playMusic(PathMusic.def());
 	}	
 }
 
