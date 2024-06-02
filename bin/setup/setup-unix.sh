@@ -2,7 +2,7 @@
 # SETUP FOR MAC AND LINUX SYSTEMS!!!
 #
 # REMINDER THAT YOU NEED HAXE INSTALLED PRIOR TO USING THIS
-# https://haxe.org/download/version/4.2.5/
+# https://haxe.org/download/version/4.3.4/
 haxelib install lime 8.1.2
 haxelib install openfl 9.3.3
 haxelib git flixel https://github.com/MarzkX/flixel
@@ -27,4 +27,4 @@ haxelib remove flxanimate
 haxelib git flxanimate https://github.com/MarzkX/flxanimate
 haxelib remove linc_luajit
 haxelib git linc_luajit https://github.com/superpowers04/linc_luajit
-haxelib git hxdiscord_rpc https://github.com/MAJigsaw77/hxdiscord_rpc
+haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
