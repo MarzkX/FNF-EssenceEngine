@@ -1,0 +1,126 @@
+{
+	"song": {
+		"events": [
+			[
+				117333.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				117708.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				118083.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				118458.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				118833.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				119208.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				119583.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				119958.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				120333.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				120708.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				121083.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			],
+			[
+				121458.333333333,
+				[
+					[
+						"Play Animation",
+						"uppercut-loop",
+						"bf"
+					]
+				]
+			]
+		]
+	}
+}

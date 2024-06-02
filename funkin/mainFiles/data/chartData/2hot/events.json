@@ -1,0 +1,188 @@
+{
+	"song": {
+		"events": [
+			[
+				8901.0989010989,
+				[
+					[
+						"Play Animation",
+						"start",
+						"dad"
+					]
+				]
+			],
+			[
+				9560.43956043956,
+				[
+					[
+						"Play Animation",
+						"kickUp",
+						"dad"
+					]
+				]
+			],
+			[
+				9890.10989010989,
+				[
+					[
+						"Play Animation",
+						"attack",
+						"dad"
+					]
+				]
+			],
+			[
+				40549.4505494506,
+				[
+					[
+						"Play Animation",
+						"start",
+						"dad"
+					]
+				]
+			],
+			[
+				41208.7912087912,
+				[
+					[
+						"Play Animation",
+						"kickUp",
+						"dad"
+					]
+				]
+			],
+			[
+				41538.4615384615,
+				[
+					[
+						"Play Animation",
+						"attack",
+						"dad"
+					]
+				]
+			],
+			[
+				51098.9010989011,
+				[
+					[
+						"Play Animation",
+						"start",
+						"dad"
+					]
+				]
+			],
+			[
+				51758.2417582417,
+				[
+					[
+						"Play Animation",
+						"kickUp",
+						"dad"
+					]
+				]
+			],
+			[
+				52087.9120879121,
+				[
+					[
+						"Play Animation",
+						"attack",
+						"dad"
+					]
+				]
+			],
+			[
+				80109.8901098901,
+				[
+					[
+						"Play Animation",
+						"start",
+						"dad"
+					]
+				]
+			],
+			[
+				80769.2307692308,
+				[
+					[
+						"Play Animation",
+						"kickUp",
+						"dad"
+					]
+				]
+			],
+			[
+				81098.9010989011,
+				[
+					[
+						"Play Animation",
+						"attack",
+						"dad"
+					]
+				],
+				null,
+				""
+			],
+			[
+				85384.6153846154,
+				[
+					[
+						"Play Animation",
+						"start",
+						"dad"
+					]
+				]
+			],
+			[
+				86043.9560439561,
+				[
+					[
+						"Play Animation",
+						"kickUp",
+						"dad"
+					]
+				]
+			],
+			[
+				86373.6263736264,
+				[
+					[
+						"Play Animation",
+						"attack",
+						"dad"
+					]
+				]
+			],
+			[
+				117032.967032967,
+				[
+					[
+						"Play Animation",
+						"start",
+						"dad"
+					]
+				]
+			],
+			[
+				117692.307692308,
+				[
+					[
+						"Play Animation",
+						"kickUp",
+						"dad"
+					]
+				]
+			],
+			[
+				118021.978021978,
+				[
+					[
+						"Play Animation",
+						"attack",
+						"dad"
+					]
+				]
+			]
+		]
+	}
+}
