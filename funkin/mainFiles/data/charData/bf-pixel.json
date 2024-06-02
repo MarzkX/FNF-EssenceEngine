@@ -100,7 +100,7 @@
 			"name": "BF LEFT MISS"
 		}
 	],
-	"vocals_file": "",
+	"vocals_file": "bf-pixel",
 	"no_antialiasing": true,
 	"image": "characters/bfPixel",
 	"position": [

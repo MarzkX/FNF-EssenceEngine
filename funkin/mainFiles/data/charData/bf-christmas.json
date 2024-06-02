@@ -3,18 +3,7 @@
 		{
 			"loop": false,
 			"offsets": [
-				-5,
-				0
-			],
-			"anim": "idle",
-			"fps": 24,
-			"name": "BF idle dance",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				5,
+				8,
 				-6
 			],
 			"anim": "singLEFT",
@@ -26,7 +15,7 @@
 			"loop": false,
 			"offsets": [
 				-20,
-				-51
+				-53
 			],
 			"anim": "singDOWN",
 			"fps": 24,
@@ -37,7 +26,7 @@
 			"loop": false,
 			"offsets": [
 				-46,
-				27
+				31
 			],
 			"anim": "singUP",
 			"fps": 24,
@@ -47,7 +36,7 @@
 		{
 			"loop": false,
 			"offsets": [
-				-48,
+				-54,
 				-7
 			],
 			"anim": "singRIGHT",
@@ -58,8 +47,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				7,
-				19
+				5,
+				17
 			],
 			"anim": "singLEFTmiss",
 			"fps": 24,
@@ -69,8 +58,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				-15,
-				-19
+				-20,
+				-23
 			],
 			"anim": "singDOWNmiss",
 			"fps": 24,
@@ -102,73 +91,18 @@
 		{
 			"loop": false,
 			"offsets": [
-				-3,
-				5
-			],
-			"anim": "hey",
-			"fps": 24,
-			"name": "BF HEY",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				14,
-				18
-			],
-			"anim": "hurt",
-			"fps": 24,
-			"name": "BF hit",
-			"indices": []
-		},
-		{
-			"loop": true,
-			"offsets": [
-				-4,
+				-5,
 				0
 			],
-			"anim": "scared",
+			"anim": "idle",
 			"fps": 24,
-			"name": "BF idle shaking",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-10,
-				-16
-			],
-			"anim": "dodge",
-			"fps": 24,
-			"name": "boyfriend dodge",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				294,
-				267
-			],
-			"anim": "attack",
-			"fps": 24,
-			"name": "boyfriend attack",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-40,
-				-40
-			],
-			"anim": "pre-attack",
-			"fps": 24,
-			"name": "bf pre attack",
+			"name": "BF idle dance",
 			"indices": []
 		}
 	],
 	"vocals_file": "bf",
 	"no_antialiasing": false,
-	"image": "characters/BOYFRIEND",
+	"image": "characters/bfChristmas",
 	"position": [
 		0,
 		350

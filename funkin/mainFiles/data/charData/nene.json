@@ -1,0 +1,194 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				-9
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "danceRight",
+			"indices": [
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29
+			],
+			"name": "Idle"
+		},
+		{
+			"offsets": [
+				0,
+				-9
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "danceLeft",
+			"indices": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			],
+			"name": "Idle"
+		},
+		{
+			"offsets": [
+				-98,
+				42
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle-knife",
+			"indices": [],
+			"name": "KnifeIdle"
+		},
+		{
+			"offsets": [
+				136,
+				41
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "no",
+			"indices": [],
+			"name": "KnifeLower"
+		},
+		{
+			"offsets": [
+				2,
+				42
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "yes",
+			"indices": [],
+			"name": "KnifeRaise"
+		},
+		{
+			"offsets": [
+				-10,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "pfw",
+			"indices": [
+				1,
+				2,
+				3,
+				4,
+				5,
+				6
+			],
+			"name": "Laugh"
+		},
+		{
+			"offsets": [
+				-120,
+				60
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "cheer",
+			"indices": [],
+			"name": "ComboCheer"
+		},
+		{
+			"offsets": [
+				-42,
+				-20
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "sad",
+			"indices": [],
+			"name": "ComboFawn"
+		},
+		{
+			"offsets": [
+				20,
+				10
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "laugh",
+			"indices": [
+				7,
+				8,
+				9,
+				10,
+				11,
+				12
+			],
+			"name": "Laugh"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				20,
+				10
+			],
+			"anim": "laugh1",
+			"fps": 24,
+			"name": "Laugh",
+			"indices": [
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				12,
+				12,
+				12,
+				12,
+				12,
+				12
+			]
+		}
+	],
+	"vocals_file": "nene",
+	"no_antialiasing": false,
+	"image": "characters/Nene",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "nene",
+	"flip_x": false,
+	"healthbar_colors": [
+		165,
+		0,
+		77
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1,
+	"_editor_isPlayer": false
+}
