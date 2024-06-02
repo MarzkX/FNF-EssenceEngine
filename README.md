@@ -13,6 +13,8 @@ Refer to [the Build Instructions](bin/setup/)
 ## Customization:
 [Gamejolt](https://gamejolt.com/) support!
 
+If you want to GameJolt Integration - Write a `GAMEJOLT_ALLOWED` in `Project.xml`!
+
 change `GJApi.hx` in `src/funkin/api/GJApi.hx` to your game id and private key
 ![SHOWCASE](bin/docs/img/gjapi.jpg)
 
