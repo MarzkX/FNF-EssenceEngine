@@ -1,0 +1,32 @@
+{
+	"songs": [
+		[
+			"Tutorial",
+			"gf",
+			[
+				106,
+				0,
+				53
+			]
+		]
+	],
+	"storyColor": [
+		249,
+		207,
+		81
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"difficulties": "",
+	"weekCharacters": [
+		"gf",
+		"bf",
+		""
+	],
+	"storyName": "TEACHING TIME",
+	"weekName": "First Level",
+	"hideStoryMode": false,
+	"weekBefore": "",
+	"startUnlocked": true
+}

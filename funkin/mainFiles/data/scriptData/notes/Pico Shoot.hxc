@@ -1,0 +1,7 @@
+function goodNoteHit(note)
+{
+    if(getVar('theMissed') == true)
+    {
+        game.makeGhostNote(note);
+    }
+}

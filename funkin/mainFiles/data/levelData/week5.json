@@ -1,0 +1,50 @@
+{
+	"songs": [
+		[
+			"Cocoa",
+			"parents",
+			[
+				126,
+				180,
+				233
+			]
+		],
+		[
+			"Eggnog",
+			"parents",
+			[
+				126,
+				180,
+				233
+			]
+		],
+		[
+			"Winter-Horrorland",
+			"monster",
+			[
+				126,
+				180,
+				233
+			]
+		]
+	],
+	"storyColor": [
+		249,
+		207,
+		81
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "christmas",
+	"difficulties": "",
+	"weekCharacters": [
+		"parents-christmas",
+		"bf",
+		"gf"
+	],
+	"storyName": "RED SNOW",
+	"weekName": "Fifth Level",
+	"hideStoryMode": false,
+	"weekBefore": "week4",
+	"startUnlocked": true
+}

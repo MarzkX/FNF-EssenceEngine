@@ -1,1 +1,11 @@
 stage
+spooky
+phillyTrain
+limo
+mallXmas
+mallEvil
+school
+schoolEvil
+tankmanBattlefield
+phillyStreets
+phillyBlazin

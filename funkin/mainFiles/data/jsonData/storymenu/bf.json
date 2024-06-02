@@ -1,6 +1,7 @@
 {
 	
 	"image": "Menu_BF",
+        "colors": [249, 207, 81],
 	"position": [
 		15,
 		-40

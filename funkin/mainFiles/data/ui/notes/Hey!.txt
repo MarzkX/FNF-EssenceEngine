@@ -1,0 +1,3 @@
+otherAnim = 'hey'
+otherAnimSpecial = true
+isHey = true

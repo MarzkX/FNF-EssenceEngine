@@ -1,0 +1,11 @@
+{
+	"idle_anim": "M Senpai Idle",
+	"image": "Menu_Senpai",
+        "colors": [249, 207, 81],
+	"position": [
+		60,
+		-70
+	],
+	"scale": 1,
+	"confirm_anim": "M Dad Idle"
+}

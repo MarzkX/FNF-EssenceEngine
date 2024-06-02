@@ -1,0 +1,50 @@
+{
+	"songs": [
+		[
+			"Senpai",
+			"senpai-pixel",
+			[
+				166,
+				100,
+				93
+			]
+		],
+		[
+			"Roses",
+			"senpai-pixel",
+			[
+				166,
+				100,
+				93
+			]
+		],
+		[
+			"Thorns",
+			"spirit-pixel",
+			[
+				166,
+				100,
+				93
+			]
+		]
+	],
+	"storyColor": [
+		249,
+		207,
+		81
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "school",
+	"difficulties": "",
+	"weekCharacters": [
+		"senpai",
+		"bf",
+		"gf"
+	],
+	"storyName": "HATING SIMULATOR ft. MOAWLING",
+	"weekName": "Sixth Level",
+	"hideStoryMode": false,
+	"weekBefore": "week5",
+	"startUnlocked": true
+}

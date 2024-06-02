@@ -1,0 +1,50 @@
+{
+	"songs": [
+		[
+			"Spookeez",
+			"spooky",
+			[
+				26,
+				40,
+				73
+			]
+		],
+		[
+			"South",
+			"spooky",
+			[
+				26,
+				40,
+				73
+			]
+		],
+		[
+			"Monster",
+			"monster",
+			[
+				26,
+				40,
+				73
+			]
+		]
+	],
+	"storyColor": [
+		249,
+		207,
+		81
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "halloween",
+	"difficulties": "",
+	"weekCharacters": [
+		"spooky",
+		"bf",
+		"gf"
+	],
+	"storyName": "Spooky Month",
+	"weekName": "Second Level",
+	"hideStoryMode": false,
+	"weekBefore": "week1",
+	"startUnlocked": true
+}

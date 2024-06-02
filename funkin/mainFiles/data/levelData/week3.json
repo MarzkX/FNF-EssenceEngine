@@ -1,0 +1,50 @@
+{
+	"songs": [
+		[
+			"Pico",
+			"pico",
+			[
+				126,
+				0,
+				93
+			]
+		],
+		[
+			"Philly Nice",
+			"pico",
+			[
+				126,
+				0,
+				93
+			]
+		],
+		[
+			"Blammed",
+			"pico",
+			[
+				126,
+				0,
+				93
+			]
+		]
+	],
+	"storyColor": [
+		249,
+		207,
+		81
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "philly",
+	"difficulties": "",
+	"weekCharacters": [
+		"pico",
+		"bf",
+		"gf"
+	],
+	"storyName": "PICO",
+	"weekName": "Third Level",
+	"hideStoryMode": false,
+	"weekBefore": "week2",
+	"startUnlocked": true
+}

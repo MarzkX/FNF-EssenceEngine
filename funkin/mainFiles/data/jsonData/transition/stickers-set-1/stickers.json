@@ -1,0 +1,11 @@
+{
+  "name": "stickers-set-1",
+  "artist": "PhantomArcade3K",
+  "stickers": ["bfSticker1", "bfSticker2", "bfSticker3",
+    "dadSticker1", "dadSticker2", "dadSticker3", 
+    "picoSticker1", "picoSticker2", "picoSticker3", 
+    "momSticker1", "momSticker2", "momSticker3",
+    "monsterSticker1", "monsterSticker2", "monsterSticker3",
+    "gfSticker1", "gfSticker2", "gfSticker3"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+	"songs": [
+		[
+			"Darnell",
+			"darnell",
+			[
+				126,
+				120,
+				200
+			]
+		],
+		[
+			"Lit-Up",
+			"darnell",
+			[
+				126,
+				120,
+				200
+			]
+		],
+		[
+			"2Hot",
+			"darnell",
+			[
+				106,
+				100,
+				180
+			]
+		],
+		[
+			"Blazin",
+			"darnell",
+			[
+				86,
+				80,
+				160
+			]
+		]
+	],
+	"storyColor": [
+		65,
+		60,
+		174
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "phillyWeekend",
+	"difficulties": "",
+	"weekCharacters": [
+		"darnell",
+		"pico-player",
+		"nene"
+	],
+	"storyName": "DUE DEBTS",
+	"weekName": "Eightth Level",
+	"hideStoryMode": false,
+	"weekBefore": "week7",
+	"startUnlocked": true
+}

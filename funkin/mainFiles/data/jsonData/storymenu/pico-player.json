@@ -1,0 +1,16 @@
+{
+	"idle_anim": "idle",
+	"image": "Menu_Pico_Player",
+	"colors": [
+		65,
+		60,
+		174
+	],
+	"position": [
+		59,
+		0
+	],
+	"flipX": false,
+	"scale": 1,
+	"confirm_anim": "confirm"
+}

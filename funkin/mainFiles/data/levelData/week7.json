@@ -1,0 +1,50 @@
+{
+	"songs": [
+		[
+			"UGH",
+			"tankman",
+			[
+				186,
+				140,
+				53
+			]
+		],
+		[
+			"Guns",
+			"tankman",
+			[
+				186,
+				140,
+				53
+			]
+		],
+		[
+			"Stress",
+			"tankman",
+			[
+				186,
+				140,
+				53
+			]
+		]
+	],
+	"storyColor": [
+		249,
+		207,
+		81
+	],
+	"hiddenUntilUnlocked": false,
+	"hideFreeplay": false,
+	"weekBackground": "tank",
+	"difficulties": "",
+	"weekCharacters": [
+		"tankman",
+		"bf",
+		"gf"
+	],
+	"storyName": "TANKMAN ft. JOHNNYUTAH",
+	"weekName": "Seventh Level",
+	"hideStoryMode": false,
+	"weekBefore": "week6",
+	"startUnlocked": true
+}
