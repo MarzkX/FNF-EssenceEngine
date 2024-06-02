@@ -1,4 +1,4 @@
-8#if android
+#if android
 import android.content.Context;
 #end
 
@@ -44,12 +44,9 @@ class Main extends Sprite
 
 	public static var instance:Main;
 	public static var fpsVar:FPSCounter;
-	public static var engineVersion:String;
 	public static var appTitle:String = '';
 
-	final lowFrame:Int = 20; //Unfocused Window Framerate for Optimization
-
-	// You can pretty much ignore everything from here on - your code should go in your states. -no)))mzk
+	// You can pretty much ignore everything from here on - your code should go in your states.
 
 	public static function main():Void
 	{
@@ -104,17 +101,15 @@ class Main extends Sprite
 			gameData.width = Math.ceil(stageWidth / gameData.zoom);
 			gameData.height = Math.ceil(stageHeight / gameData.zoom);
 		}
-
-		engineVersion = Lib.application.meta.get('version');
 	
 		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(engine.psychlua.CallbackHandler.call)); #end
 		Controls.instance = new Controls();
+		FlxSprite.defaultAntialiasing = true; //this not pixel game!!
 		ClientPrefs.loadDefaultKeys();
 		#if ACHIEVEMENTS_ALLOWED Achievements.load(); #end
 		appTitle = Lib.application.meta.get('title');
 
-		game = new FlxGame(gameData.width, gameData.height, gameData.initialState,
-			#if (flixel < "5.0.0") gameData.zoom, #end gameData.framerate, 
+		game = new FlxGame(gameData.width, gameData.height, gameData.initialState, gameData.framerate, 
 			gameData.framerate, gameData.skipSplash, gameData.startFullscreen);
 		
 		@:privateAccess
@@ -148,10 +143,6 @@ class Main extends Sprite
 		#end
 		#end
 
-		#if DISCORD_ALLOWED
-		DiscordClient.prepare();
-		#end
-
 		// shader coords fix
 		FlxG.signals.gameResized.add(function (w, h) {
 		     if (FlxG.cameras != null) {
@@ -165,10 +156,117 @@ class Main extends Sprite
 				resetSpriteCache(FlxG.game);
 		});
 
+		//idk why this created a crashes
+		//lime.app.Application.current.window.onFocusOut.add(onWindowFocusOut);
+		//lime.app.Application.current.window.onFocusIn.add(onWindowFocusIn);
+
+		traces();
+	}
+
+	var focusMusicTween:FlxTween;
+	var oldVol:Float = Constants.GAME_REAL_VOLUME;
+	var newVol:Float = Constants.GAME_UNFOCUS_VOLUME;
+
+	public static var focused:Bool = true;
+
+	// thx for ur code ari
+	function onWindowFocusOut()
+	{
+		focused = false;
+
+		// Lower global volume when unfocused
+		if (Type.getClass(FlxG.state) != PlayState) // imagine stealing my code smh
+		{
+			oldVol = FlxG.sound.volume;
+			if (oldVol > Constants.GAME_UNFOCUS_VOLUME)
+			{
+				newVol = Constants.GAME_UNFOCUS_VOLUME;
+			}
+			else
+			{
+				if (oldVol > 0.1)
+				{
+					newVol = 0.1;
+				}
+				else
+				{
+					newVol = 0;
+				}
+			}
+
+			trace("Game unfocused");
+
+			if (focusMusicTween != null)
+				focusMusicTween.cancel();
+			focusMusicTween = FlxTween.tween(FlxG.sound, {volume: newVol}, 0.5);
+
+			// Conserve power by lowering draw framerate when unfocuced
+			FlxG.drawFramerate = Constants.LOW_FRAME;
+		}
+	}
+
+	function onWindowFocusIn()
+	{
+		new FlxTimer().start(0.2, function(tmr:FlxTimer)
+		{
+			focused = true;
+		});
+
+		// Lower global volume when unfocused
+		if (Type.getClass(FlxG.state) != PlayState)
+		{
+			trace("Game focused");
+
+			// Normal global volume when focused
+			if (focusMusicTween != null)
+				focusMusicTween.cancel();
+
+			focusMusicTween = FlxTween.tween(FlxG.sound, {volume: oldVol}, 0.5);
+
+			// Bring framerate back when focused
+			FlxG.drawFramerate = ClientPrefs.data.framerate;
+		}
+	}
+
+	function traces() {
+		#if MODS_ALLOWED
+		trace('MODS_ALLOWED is enabled! The folder \'addons\' will working!');
+		#else
+		trace('MODS_ALLOWED is disabled! The folder \'addons\' not working!');
+		#end
+
+		#if LUA_ALLOWED
+		trace('LUA_ALLOWED is enabled! Lua scripts are working!');
+		#else
+		trace('LUA_ALLOWED is disabled! Lua scripts not working!');
+		#end
+
+		#if HSCRIPT_ALLOWED
+		trace('HSCRIPT_ALLOWED is enabled! Hxc scripts are working!');
+		#else
+		trace('HSCRIPT_ALLOWED is disabled! Hxc scripts not working!');
+		#end
+
 		#if hxcpp_debug_server
 		trace('hxcpp_debug_server is enabled! You can now connect to the game with a debugger.');
 		#else
 		trace('hxcpp_debug_server is disabled! This build does not support debugging.');
+		#end
+
+		#if sys
+		trace('you mr. sys (ka)!');
+		#else
+		trace('you mr. js');
+		#end
+		
+		#if cpp
+		trace('you have many codes from C++');
+		#else
+		trace('you html');
+		#end
+
+		#if PROTOTYPE
+		trace('THIS PROTOTYPE VERSION');
 		#end
 	}
 
@@ -186,10 +284,10 @@ class Main extends Sprite
 
 	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
 	// very cool person for real they don't get enough credit for their work
-// imma lazy for optimize this function - mzk
 	#if CRASH_HANDLER
 	function onCrash(e:UncaughtErrorEvent):Void
 	{
+		/*
 		#if windows
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
 		var errMsg:String = "";
@@ -235,7 +333,7 @@ class Main extends Sprite
 		#if DISCORD_ALLOWED
 		DiscordClient.shutdown();
 		#end
-		#else
+		#else*/
 		var errMsg:String = "";
 		var path:String;
 		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
@@ -257,7 +355,7 @@ class Main extends Sprite
 			}
 		}
 
-		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: https://github.com/ShadowMario/FNF-PsychEngine\n\n> Crash Handler written by: sqirra-rng";
+		errMsg += "\nUncaught Error: " + e.error + "\nPlease report this error to the GitHub page: "+Constants.URL_GITHUB+"\n\n";
 
 		if (!FileSystem.exists("./bin/crashlogs/"))
 			FileSystem.createDirectory("./bin/crashlogs/");
@@ -267,11 +365,11 @@ class Main extends Sprite
 		Sys.println(errMsg);
 		Sys.println("Crash dump saved in " + Path.normalize(path));
 
-		Application.current.window.alert(errMsg, "Fatal Uncaught Error");
+		lime.app.Application.current.window.alert(errMsg, "Fatal Uncaught Error");
 		#if DISCORD_ALLOWED
 		DiscordClient.shutdown();
 		#end
-		#end
+		//#end
 		Sys.exit(-1);
 	}
 	#end
