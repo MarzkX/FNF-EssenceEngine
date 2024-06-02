@@ -56,7 +56,7 @@ class NotesSubState extends MusicBeatSubstate
 		DiscordClient.changePresence("Note Colors Menu", null);
 		#end
 		
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(PathImage.def_bg());
 		bg.color = 0xFFEA71FD;
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.data.antialiasing;
@@ -96,11 +96,11 @@ class NotesSubState extends MusicBeatSubstate
 		text.setScale(0.4);
 		add(text);
 
-		copyButton = new FlxSprite(760, 50).loadGraphic(Paths.image('noteColorMenu/copy'));
+		copyButton = new FlxSprite(760, 50).loadGraphic(Paths.image('${PathStr.OPTIONS_PATH}noteColors/copy'));
 		copyButton.alpha = 0.6;
 		add(copyButton);
 
-		pasteButton = new FlxSprite(1180, 50).loadGraphic(Paths.image('noteColorMenu/paste'));
+		pasteButton = new FlxSprite(1180, 50).loadGraphic(Paths.image('${PathStr.OPTIONS_PATH}noteColors/paste'));
 		pasteButton.alpha = 0.6;
 		add(pasteButton);
 
@@ -112,13 +112,13 @@ class NotesSubState extends MusicBeatSubstate
 		colorGradientSelector.offset.y = 5;
 		add(colorGradientSelector);
 
-		colorPalette = new FlxSprite(820, 580).loadGraphic(Paths.image('noteColorMenu/palette', false));
+		colorPalette = new FlxSprite(820, 580).loadGraphic(Paths.image('${PathStr.OPTIONS_PATH}noteColors/palette', false));
 		colorPalette.scale.set(20, 20);
 		colorPalette.updateHitbox();
 		colorPalette.antialiasing = false;
 		add(colorPalette);
 		
-		colorWheel = new FlxSprite(860, 200).loadGraphic(Paths.image('noteColorMenu/colorWheel'));
+		colorWheel = new FlxSprite(860, 200).loadGraphic(Paths.image('${PathStr.OPTIONS_PATH}noteColors/colorWheel'));
 		colorWheel.setGraphicSize(360, 360);
 		colorWheel.updateHitbox();
 		add(colorWheel);
@@ -333,7 +333,7 @@ class NotesSubState extends MusicBeatSubstate
 
 		if(pointerOverlaps(copyButton))
 		{
-			FlxG.mouse.load(Paths.image('button', 'cursor', ClientPrefs.data.cacheOnGPU).bitmap);
+			Cursor.cursorMode = Pointer;
 			copyButton.alpha = 1;
 			if(generalPressed)
 			{
@@ -345,7 +345,7 @@ class NotesSubState extends MusicBeatSubstate
 		}
 		else if (pointerOverlaps(pasteButton))
 		{
-			FlxG.mouse.load(Paths.image('button', 'cursor', ClientPrefs.data.cacheOnGPU).bitmap);
+			Cursor.cursorMode = Pointer;
 			pasteButton.alpha = 1;
 			if(generalPressed)
 			{
@@ -366,7 +366,7 @@ class NotesSubState extends MusicBeatSubstate
 		}
 		else
 		{
-			FlxG.mouse.load(Paths.image('arrow', 'cursor', ClientPrefs.data.cacheOnGPU).bitmap);
+			Cursor.cursorMode = Default;
 		}
 
 		// Click
@@ -375,6 +375,7 @@ class NotesSubState extends MusicBeatSubstate
 			hexTypeNum = -1;
 			if (pointerOverlaps(modeNotes))
 			{
+				Cursor.cursorMode = Pointer;
 				modeNotes.forEachAlive(function(note:FlxSprite) {
 					if (curSelectedMode != note.ID && pointerOverlaps(note))
 					{
@@ -388,6 +389,7 @@ class NotesSubState extends MusicBeatSubstate
 			}
 			else if (pointerOverlaps(myNotes))
 			{
+				Cursor.cursorMode = Pointer;
 				myNotes.forEachAlive(function(note:StrumNote) {
 					if (curSelectedNote != note.ID && pointerOverlaps(note))
 					{
@@ -402,14 +404,17 @@ class NotesSubState extends MusicBeatSubstate
 				});
 			}
 			else if (pointerOverlaps(colorWheel)) {
+				Cursor.cursorMode = Pointer;
 				_storedColor = getShaderColor();
 				holdingOnObj = colorWheel;
 			}
 			else if (pointerOverlaps(colorGradient)) {
+				Cursor.cursorMode = Pointer;
 				_storedColor = getShaderColor();
 				holdingOnObj = colorGradient;
 			}
 			else if (pointerOverlaps(colorPalette)) {
+				Cursor.cursorMode = Pointer;
 				setShaderColor(colorPalette.pixels.getPixel32(
 					Std.int((pointerX() - colorPalette.x) / colorPalette.scale.x), 
 					Std.int((pointerY() - colorPalette.y) / colorPalette.scale.y)));
@@ -418,6 +423,7 @@ class NotesSubState extends MusicBeatSubstate
 			}
 			else if (pointerOverlaps(skinNote))
 			{
+				Cursor.cursorMode = Pointer;
 				onPixel = !onPixel;
 				spawnNotes();
 				updateNotes(true);
@@ -436,7 +442,7 @@ class NotesSubState extends MusicBeatSubstate
 				hexTypeLine.visible = true;
 				centerHexTypeLine();
 			}
-			else holdingOnObj = null;
+			else { holdingOnObj = null; Cursor.cursorMode = Default;}
 		}
 		// holding
 		if(holdingOnObj != null)
@@ -611,7 +617,7 @@ class NotesSubState extends MusicBeatSubstate
 
 		// respawn stuff
 		var res:Int = onPixel ? 160 : 17;
-		skinNote = new FlxSprite(48, 24).loadGraphic(Paths.image('noteColorMenu/' + (onPixel ? 'note' : 'notePixel')), true, res, res);
+		skinNote = new FlxSprite(48, 24).loadGraphic(Paths.image('${PathStr.OPTIONS_PATH}noteColors/' + (onPixel ? 'note' : 'notePixel')), true, res, res);
 		skinNote.antialiasing = ClientPrefs.data.antialiasing;
 		skinNote.setGraphicSize(68);
 		skinNote.updateHitbox();
@@ -623,7 +629,7 @@ class NotesSubState extends MusicBeatSubstate
 		var res:Int = !onPixel ? 160 : 17;
 		for (i in 0...3)
 		{
-			var newNote:FlxSprite = new FlxSprite(230 + (100 * i), 100).loadGraphic(Paths.image('noteColorMenu/' + (!onPixel ? 'note' : 'notePixel')), true, res, res);
+			var newNote:FlxSprite = new FlxSprite(230 + (100 * i), 100).loadGraphic(Paths.image('${PathStr.OPTIONS_PATH}noteColors/' + (!onPixel ? 'note' : 'notePixel')), true, res, res);
 			newNote.antialiasing = ClientPrefs.data.antialiasing;
 			newNote.setGraphicSize(85);
 			newNote.updateHitbox();

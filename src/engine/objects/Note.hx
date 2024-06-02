@@ -76,15 +76,20 @@ class Note extends FlxSprite
 	public var inEditor:Bool = false;
 
 	public var animSuffix:String = '';
+	public var otherAnim:String = '';
+	public var otherAnimForce:Bool = false;
+	public var isHey:Bool = false;
+	public var otherAnimSpecial:Bool = false;
 	public var gfNote:Bool = false;
 	public var earlyHitMult:Float = 1;
 	public var lateHitMult:Float = 1;
 	public var lowPriority:Bool = false;
+	public var notePath:String = PathStr.NOTE_PATH;
 
 	public static var SUSTAIN_SIZE:Int = 44;
 	public static var swagWidth:Float = 160 * 0.7;
 	public static var colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
-	public static var defaultNoteSkin(default, never):String = 'noteSkins/NOTE_assets';
+	public static var defaultNoteSkin(default, never):String = '${PathStr.NOTE_PATH}NOTES_assets';
 
 	public var noteSplashData:NoteSplashData = {
 		disabled: false,
@@ -163,11 +168,15 @@ class Note extends FlxSprite
 	}
 
 	private function set_noteType(value:String):String {
-		noteSplashData.texture = PlayState.SONG != null ? PlayState.SONG.splashSkin : 'noteSplashes';
+		noteSplashData.texture = PlayState.SONG != null ? PlayState.SONG.splashSkin : '${notePath}splashes/noteSplashes';
 		defaultRGB();
 
 		if(noteData > -1 && noteType != value) {
 			switch(value) {
+				case 'Hey!':
+					otherAnim = 'hey';
+					otherAnimSpecial = true;
+					isHey = true;
 				case 'Hurt Note':
 					ignoreNote = mustPress;
 					//reloadNote('HURTNOTE_assets');
@@ -182,7 +191,7 @@ class Note extends FlxSprite
 					// splash data and colors
 					noteSplashData.r = 0xFFFF0000;
 					noteSplashData.g = 0xFF101010;
-					noteSplashData.texture = 'noteSplashes/noteSplashes-electric';
+					noteSplashData.texture = '${notePath}splashes/noteSplashes-electric';
 
 					// gameplay data
 					lowPriority = true;
@@ -339,7 +348,7 @@ class Note extends FlxSprite
 		var lastScaleY:Float = scale.y;
 		var skinPostfix:String = getNoteSkinPostfix();
 		var customSkin:String = skin + skinPostfix;
-		var path:String = PlayState.isPixelStage ? 'pixelUI/' : '';
+		var path:String = PlayState.isPixelStage ? '${notePath}pixel/' : '';
 		if(customSkin == _lastValidChecked || Paths.fileExists('images/' + path + customSkin + '.png', IMAGE))
 		{
 			skin = customSkin;
@@ -349,11 +358,11 @@ class Note extends FlxSprite
 
 		if(PlayState.isPixelStage) {
 			if(isSustainNote) {
-				var graphic = Paths.image('pixelUI/' + skinPixel + 'ENDS' + skinPostfix);
+				var graphic = Paths.image('${notePath}pixel/' + skinPixel + 'ENDS' + skinPostfix);
 				loadGraphic(graphic, true, Math.floor(graphic.width / 4), Math.floor(graphic.height / 2));
 				originalHeight = graphic.height / 2;
 			} else {
-				var graphic = Paths.image('pixelUI/' + skinPixel + skinPostfix);
+				var graphic = Paths.image('${notePath}pixel/' + skinPixel + skinPostfix);
 				loadGraphic(graphic, true, Math.floor(graphic.width / 4), Math.floor(graphic.height / 5));
 			}
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));

@@ -1,9 +1,9 @@
 package engine.objects;
 
+import funkin.audio.visualize.ABotVis;
+
 class HealthIcon extends FlxSprite
 {
-	public static var PIXEL_DEFAULT_SCALE:Float = 6;
-
 	public var inEditor:Bool = false;
 	public var sprTracker:FlxSprite;
 	private var isOldIcon:Bool = false;
@@ -30,16 +30,14 @@ class HealthIcon extends FlxSprite
 	private var iconOffsets:Array<Float> = [0, 0];
 	public function changeIcon(char:String, ?allowGPU:Bool = true) {
 		if(this.char != char) {
-			var name:String = 'icons/' + char;
-			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/' + char; //Older versions of psych engine's support
-			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'icons/face'; //Prevents crash from missing icon
+			var name:String = 'ui/icons/' + char;
+			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'ui/icons/' + char; //Older versions of psych engine's support
+			if(!Paths.fileExists('images/' + name + '.png', IMAGE)) name = 'ui/icons/face'; //Prevents crash from missing icon
 			
 			var graphic = Paths.image(name, allowGPU);
 			loadGraphic(graphic, true, Math.floor(graphic.width / 2), Math.floor(graphic.height));
 			iconOffsets[0] = (width - (graphic.width/2)) / 2;
 			iconOffsets[1] = (height - graphic.height) / 2;
-
-			if(!inEditor) setGraphicSize(150, 150); //this default
 			updateHitbox();
 
 			animation.add(char, [0, 1], 0, false, isPlayer);

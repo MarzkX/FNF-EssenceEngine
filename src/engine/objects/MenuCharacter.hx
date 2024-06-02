@@ -7,6 +7,7 @@ typedef MenuCharacterFile = {
 	var image:String;
 	var scale:Float;
 	var position:Array<Int>;
+	var colors:Array<Int>;
 	var idle_anim:String;
 	var confirm_anim:String;
 	var flipX:Bool;
@@ -14,15 +15,48 @@ typedef MenuCharacterFile = {
 
 class MenuCharacter extends FlxSprite
 {
+	var colorTween:FlxTween;
 	public var character:String;
 	public var hasConfirmAnimation:Bool = false;
+	private var DEFAULT_COLORS:Array<Int> = [249, 207, 81];
+	public var rgbColors:Array<Int> = [];
 	private static var DEFAULT_CHARACTER:String = 'bf';
+	var characterPath:String;
+	var rawJson = null;
+	var charFile:MenuCharacterFile;
 
 	public function new(x:Float, character:String = 'bf')
 	{
 		super(x);
 
+		characterPath = 'data/jsonData/storymenu/' + character + '.json';
+
+		#if MODS_ALLOWED
+		var path:String = Paths.modFolders(characterPath);
+		if (!FileSystem.exists(path)) {
+			path = Paths.getSharedPath(characterPath);
+		}
+
+		if(!FileSystem.exists(path)) {
+			path = Paths.getSharedPath('data/jsonData/storymenu/' + DEFAULT_CHARACTER + '.json');
+		}
+		rawJson = File.getContent(path);
+
+		#else
+		var path:String = Paths.getSharedPath(characterPath);
+		if(!Assets.exists(path)) {
+			path = Paths.getSharedPath('data/jsonData/storymenu/' + DEFAULT_CHARACTER + '.json');
+		}
+		rawJson = Assets.getText(path);
+		#end
+
+		charFile = cast Json.parse(rawJson);
+
+		rgbColors = charFile.colors;
+		color = FlxColor.fromRGB(rgbColors[0], rgbColors[1], rgbColors[2]);
+
 		antialiasing = ClientPrefs.data.antialiasing;
+
 		changeCharacter(character);
 	}
 
@@ -42,21 +76,22 @@ class MenuCharacter extends FlxSprite
 			case '':
 				visible = false;
 				dontPlayAnim = true;
+
+				color = FlxColor.fromRGB(DEFAULT_COLORS[0], DEFAULT_COLORS[1], DEFAULT_COLORS[2]);
 			default:
-				var characterPath:String = 'data/jsonData/storymenu/' + character + '.json';
-				var rawJson = null;
+				characterPath = 'data/jsonData/storymenu/' + character + '.json';
 
 				#if MODS_ALLOWED
 				var path:String = Paths.modFolders(characterPath);
 				if (!FileSystem.exists(path)) {
 					path = Paths.getSharedPath(characterPath);
 				}
-
+		
 				if(!FileSystem.exists(path)) {
 					path = Paths.getSharedPath('data/jsonData/storymenu/' + DEFAULT_CHARACTER + '.json');
 				}
 				rawJson = File.getContent(path);
-
+		
 				#else
 				var path:String = Paths.getSharedPath(characterPath);
 				if(!Assets.exists(path)) {
@@ -64,9 +99,10 @@ class MenuCharacter extends FlxSprite
 				}
 				rawJson = Assets.getText(path);
 				#end
-				
-				var charFile:MenuCharacterFile = cast Json.parse(rawJson);
-				frames = Paths.getSparrowAtlas('menucharacters/' + charFile.image);
+
+				charFile = cast Json.parse(rawJson);
+
+				frames = PathAtlas.sparrow(PathStr.MENU_STORY_PATH + 'characters/' + charFile.image);
 				animation.addByPrefix('idle', charFile.idle_anim, 24);
 
 				var confirmAnim:String = charFile.confirm_anim;
@@ -78,6 +114,16 @@ class MenuCharacter extends FlxSprite
 				}
 
 				flipX = (charFile.flipX == true);
+				rgbColors = charFile.colors;
+
+				if(colorTween != null)
+					colorTween.cancel();
+
+				colorTween = FlxTween.color(this, Constants.COLOR_TIMER_TWEEN, this.color, FlxColor.fromRGB(rgbColors[0], rgbColors[1], rgbColors[2]), {
+					onComplete: (t:FlxTween) -> {
+						t = null;
+					}
+				});
 
 				if(charFile.scale != 1) {
 					scale.set(charFile.scale, charFile.scale);

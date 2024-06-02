@@ -13,12 +13,14 @@ import openfl.net.FileFilter;
 import haxe.Json;
 
 import engine.objects.TypedAlphabet;
-
 import engine.cutscenes.DialogueBoxPsych;
 import engine.cutscenes.DialogueCharacter;
 
 class DialogueEditorState extends MusicBeatState
 {
+	static var musicPlaying:Bool = true;
+	static var musicOfficial:Bool = false;
+	
 	var character:DialogueCharacter;
 	var box:FlxSprite;
 	var daText:TypedAlphabet;
@@ -83,12 +85,24 @@ class DialogueEditorState extends MusicBeatState
 		animText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		animText.scrollFactor.set();
 		add(animText);
-		
+		checkBGMusic();
+
 		daText = new TypedAlphabet(DialogueBoxPsych.DEFAULT_TEXT_X, DialogueBoxPsych.DEFAULT_TEXT_Y, DEFAULT_TEXT);
 		daText.setScale(0.7);
 		add(daText);
 		changeText();
 		super.create();
+	}
+
+	function checkBGMusic()
+	{
+		final musicPath:String = musicOfficial ? 'second' : 'first';
+
+		if(musicPlaying)
+			FlxG.sound.playMusic(PathFile.file('editors/chart/$musicPath.${Paths.SOUND_EXT}', SOUND, 'ingame'), 0.6);
+		else
+			if(FlxG.sound.music.playing)
+				FlxG.sound.music.stop();
 	}
 
 	var UI_box:FlxUITabMenu;
@@ -309,6 +323,19 @@ class DialogueEditorState extends MusicBeatState
 				character.animation.curAnim.restart();
 			}
 		}
+
+		if(FlxG.keys.justPressed.F2)
+		{
+			musicPlaying = !musicPlaying;
+			checkBGMusic();
+		}
+
+		if(musicPlaying)
+			if(FlxG.keys.justPressed.M)
+			{
+				musicOfficial = !musicOfficial;
+				checkBGMusic();
+			}
 
 		var blockInput:Bool = false;
 		for (inputText in blockPressWhileTypingOn) {

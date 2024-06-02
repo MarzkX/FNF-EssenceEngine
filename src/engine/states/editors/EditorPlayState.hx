@@ -7,6 +7,7 @@ import funkin.backend.Rating;
 import engine.objects.Note;
 import engine.objects.NoteSplash;
 import engine.objects.StrumNote;
+import engine.objects.Character;
 
 import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
@@ -15,7 +16,6 @@ import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
 
 import haxe.Json;
-import engine.objects.Character;
 import openfl.utils.Assets as OpenFlAssets;
 
 class EditorPlayState extends MusicBeatSubstate
@@ -96,7 +96,7 @@ class EditorPlayState extends MusicBeatSubstate
 		if(ClientPrefs.data.hitsoundVolume > 0) Paths.sound('hitsound');
 
 		/* setting up Editor PlayState stuff */
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(PathImage.def_bg());
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.scrollFactor.set();
 		bg.color = 0xFF101010;

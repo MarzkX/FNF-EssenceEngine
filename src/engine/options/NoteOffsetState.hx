@@ -76,7 +76,17 @@ class NoteOffsetState extends MusicBeatState
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.35;
 
-		rating = new FlxSprite().loadGraphic(Paths.image('sick'));
+		var ratingStr:String = '';
+		if(FlxG.random.bool(25))
+			ratingStr = 'sick';
+		else if(FlxG.random.bool(25))
+			ratingStr = 'good';
+		else if(FlxG.random.bool(25))
+			ratingStr = 'bad';
+		else
+			ratingStr = 'shit';
+
+		rating = new FlxSprite().loadGraphic(Paths.image(PathStr.GAME_PATH + ratingStr));
 		rating.cameras = [camHUD];
 		rating.antialiasing = ClientPrefs.data.antialiasing;
 		rating.setGraphicSize(Std.int(rating.width * 0.7));
@@ -97,7 +107,7 @@ class NoteOffsetState extends MusicBeatState
 		var daLoop:Int = 0;
 		for (i in seperatedScore)
 		{
-			var numScore:FlxSprite = new FlxSprite(43 * daLoop).loadGraphic(Paths.image('num' + i));
+			var numScore:FlxSprite = new FlxSprite(43 * daLoop).loadGraphic(Paths.image(PathStr.GAME_PATH + 'num' + i));
 			numScore.cameras = [camHUD];
 			numScore.antialiasing = ClientPrefs.data.antialiasing;
 			numScore.setGraphicSize(Std.int(numScore.width * 0.5));
@@ -132,7 +142,7 @@ class NoteOffsetState extends MusicBeatState
 		barPercent = ClientPrefs.data.noteOffset;
 		updateNoteDelay();
 		
-		timeBar = new Bar(0, timeTxt.y + (timeTxt.height / 3), 'healthBar', function() return barPercent, delayMin, delayMax);
+		timeBar = new Bar(0, timeTxt.y + (timeTxt.height / 3), '${PathStr.GAME_PATH}healthBar', function() return barPercent, delayMin, delayMax);
 		timeBar.scrollFactor.set();
 		timeBar.screenCenter(X);
 		timeBar.visible = false;
@@ -196,8 +206,10 @@ class NoteOffsetState extends MusicBeatState
 		if(controls.controllerMode != _lastControllerMode)
 		{
 			//trace('changed controller mode');
-		    FlxG.mouse.load(Paths.image('arrow', 'cursor', ClientPrefs.data.cacheOnGPU).bitmap);
-			FlxG.mouse.visible = !controls.controllerMode;
+			if(controls.controllerMode)
+				Cursor.hide();
+			else
+				Cursor.show();
 			controllerPointer.visible = controls.controllerMode;
 
 			// changed to controller mid state
@@ -311,6 +323,7 @@ class NoteOffsetState extends MusicBeatState
 					startMousePos.y - comboNums.y >= 0 && startMousePos.y - comboNums.y <= comboNums.height)
 				{
 					holdingObjectType = true;
+					Cursor.cursorMode = Grabbing;
 					startComboOffset.x = ClientPrefs.data.comboOffset[2];
 					startComboOffset.y = ClientPrefs.data.comboOffset[3];
 					//trace('yo bro');
@@ -319,6 +332,7 @@ class NoteOffsetState extends MusicBeatState
 						 startMousePos.y - rating.y >= 0 && startMousePos.y - rating.y <= rating.height)
 				{
 					holdingObjectType = false;
+					Cursor.cursorMode = Grabbing;
 					startComboOffset.x = ClientPrefs.data.comboOffset[0];
 					startComboOffset.y = ClientPrefs.data.comboOffset[1];
 					//trace('heya');
@@ -326,6 +340,7 @@ class NoteOffsetState extends MusicBeatState
 			}
 			if(FlxG.mouse.justReleased || gamepadReleased) {
 				holdingObjectType = null;
+				Cursor.cursorMode = Default;
 				//trace('dead');
 			}
 
@@ -413,8 +428,8 @@ class NoteOffsetState extends MusicBeatState
 				else
 					FlxG.sound.music.volume = 0;
 			}
-			else FlxG.sound.playMusic(Paths.music('freakyMenu'));
-			FlxG.mouse.visible = false;
+			else FlxG.sound.playMusic(PathMusic.def());
+			Cursor.hide();
 		}
 
 		Conductor.songPosition = FlxG.sound.music.time;
@@ -524,11 +539,10 @@ class NoteOffsetState extends MusicBeatState
 		beatText.visible = !onComboMenu;
 
 		controllerPointer.visible = false;
-		FlxG.mouse.visible = false;
+		Cursor.hide();
 		if(onComboMenu)
 		{ 
-			FlxG.mouse.load(Paths.image('arrow', 'cursor', ClientPrefs.data.cacheOnGPU).bitmap);
-			FlxG.mouse.visible = !controls.controllerMode;
+			if(controls.controllerMode) Cursor.hide(); else Cursor.show();
 			controllerPointer.visible = controls.controllerMode;
 		}
 

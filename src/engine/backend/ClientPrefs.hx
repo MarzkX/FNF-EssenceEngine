@@ -3,14 +3,13 @@ package engine.backend;
 import flixel.input.keyboard.FlxKey;
 import flixel.input.gamepad.FlxGamepadInputID;
 
-import funkin.ui.TitleState;
-
 // Add a variable here and it will get automatically saved
 @:structInit class SaveVariables {
 	public var downScroll:Bool = false;
 	public var middleScroll:Bool = false;
 	public var darkMode:Bool = false;
 	public var opponentStrums:Bool = true;
+	public var noteBGOpacity:Float = 0;
 	public var showFPS:Bool = true;
 	public var showMEM:Bool = true;
 	public var fpsRain:Bool = false;
@@ -26,6 +25,7 @@ import funkin.ui.TitleState;
 	public var lowQuality:Bool = false;
 	public var shaders:Bool = true;
 	public var cacheOnGPU:Bool = #if !switch false #else true #end; //From Stilic
+	public var iconScale:Bool = true;
 	public var framerate:Int = 60;
 	public var camZooms:Bool = true;
 	public var hideHud:Bool = false;
@@ -77,6 +77,7 @@ import funkin.ui.TitleState;
 	public var sickWindow:Int = 45;
 	public var goodWindow:Int = 90;
 	public var badWindow:Int = 135;
+	public var shitWindow:Int = 190;
 	public var safeFrames:Float = 10;
 	public var guitarHeroSustains:Bool = true;
 	public var discordRPC:Bool = true;
@@ -110,7 +111,8 @@ class ClientPrefs {
 		'volume_down'	=> [NUMPADMINUS, MINUS],
 		
 		'debug_1'		=> [SEVEN],
-		'debug_2'		=> [EIGHT]
+		'debug_2'		=> [EIGHT],
+		'debug_3'       => [NINE]
 	];
 	public static var gamepadBinds:Map<String, Array<FlxGamepadInputID>> = [
 		'note_up'		=> [DPAD_UP, Y],
@@ -211,10 +213,6 @@ class ClientPrefs {
 			FlxG.sound.volume = ST.game().data.volume;
 		if (ST.game().data.mute != null)
 			FlxG.sound.muted = ST.game().data.mute;
-
-		#if DISCORD_ALLOWED
-		DiscordClient.check();
-		#end
 
 		// controls on a separate save file
 		if(ST.controls() != null)

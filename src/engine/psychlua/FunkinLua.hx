@@ -132,7 +132,7 @@ class FunkinLua {
 		set('rating', 0);
 		set('ratingName', '');
 		set('ratingFC', '');
-		set('version', MainMenuState.psychEngineVersion.trim());
+		set('version', Constants.ENGINE_VERSION);
 
 		set('inGameOver', false);
 		set('mustHitSection', false);
@@ -209,7 +209,7 @@ class FunkinLua {
 		}
 
 		//
-		Lua_helper.add_callback(lua, "getRunningScripts", function(){
+		Lua_helper.add_callback(lua, "getRunningScripts", () ->{
 			var runningScripts:Array<String> = [];
 			for (script in game.luaArray)
 				runningScripts.push(script.scriptName);
@@ -747,13 +747,13 @@ class FunkinLua {
 			game.songHits = value;
 			game.RecalculateRating();
 		});
-		Lua_helper.add_callback(lua, "getScore", function() {
+		Lua_helper.add_callback(lua, "getScore", () -> {
 			return game.songScore;
 		});
-		Lua_helper.add_callback(lua, "getMisses", function() {
+		Lua_helper.add_callback(lua, "getMisses", () -> {
 			return game.songMisses;
 		});
-		Lua_helper.add_callback(lua, "getHits", function() {
+		Lua_helper.add_callback(lua, "getHits", () -> {
 			return game.songHits;
 		});
 
@@ -763,7 +763,7 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "addHealth", function(value:Float = 0) {
 			game.health += value;
 		});
-		Lua_helper.add_callback(lua, "getHealth", function() {
+		Lua_helper.add_callback(lua, "getHealth", () -> {
 			return game.health;
 		});
 
@@ -801,11 +801,11 @@ class FunkinLua {
 			return true;
 		});
 
-		Lua_helper.add_callback(lua, "startCountdown", function() {
+		Lua_helper.add_callback(lua, "startCountdown", () -> {
 			game.startCountdown();
 			return true;
 		});
-		Lua_helper.add_callback(lua, "endSong", function() {
+		Lua_helper.add_callback(lua, "endSong", () -> {
 			game.KillNotes();
 			game.endSong();
 			return true;
@@ -828,8 +828,6 @@ class FunkinLua {
 			else
 				EssenceFlxG.switchState(() -> new FreeplayState());
 
-			#if DISCORD_ALLOWED DiscordClient.resetClientID(); #end
-
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			PlayState.changedDifficulty = false;
 			PlayState.chartingMode = false;
@@ -838,8 +836,12 @@ class FunkinLua {
 			Mods.loadTopMod();
 			return true;
 		});
-		Lua_helper.add_callback(lua, "getSongPosition", function() {
+		Lua_helper.add_callback(lua, "getSongPosition", () -> {
 			return Conductor.songPosition;
+		});
+
+		Lua_helper.add_callback(lua, "coolLerp", (base:Float, target:Float, ratio:Float) -> {
+			return funkin.util.MathUtil.coolLerp(base, target, ratio);
 		});
 
 		Lua_helper.add_callback(lua, "getCharacterX", function(type:String) {
@@ -1367,7 +1369,7 @@ class FunkinLua {
 				if(game.modchartSounds.exists(tag)) {
 					game.modchartSounds.get(tag).stop();
 				}
-				game.modchartSounds.set(tag, FlxG.sound.play(Paths.sound(sound), volume, false, null, true, function() {
+				game.modchartSounds.set(tag, FlxG.sound.play(Paths.sound(sound), volume, false, null, true, () -> {
 					game.modchartSounds.remove(tag);
 					game.callOnLuas('onSoundFinished', [tag]);
 				}));
@@ -1477,7 +1479,7 @@ class FunkinLua {
 
 		// mod settings
 		#if MODS_ALLOWED
-		addLocalCallback("getModSetting", function(saveTag:String, ?modName:String = null) {
+		addLocalCallback("getModSetting", (saveTag:String, ?modName:String = null)-> {
 			if(modName == null)
 			{
 				if(this.modFolder == null)
@@ -1492,15 +1494,14 @@ class FunkinLua {
 		#end
 		//
 
-		Lua_helper.add_callback(lua, "debugPrint", function(text:Dynamic = '', color:String = 'WHITE') PlayState.instance.addTextToDebug(text, CoolUtil.colorFromString(color)));
+		Lua_helper.add_callback(lua, "debugPrint", (text:Dynamic = '', color:String = 'WHITE') -> PlayState.instance.addTextToDebug(text, CoolUtil.colorFromString(color)));
 
-		addLocalCallback("close", function() {
+		addLocalCallback("close", () -> {
 			closed = true;
 			trace('Closing script $scriptName');
 			return closed;
 		});
 
-		#if DISCORD_ALLOWED DiscordClient.addLuaCallbacks(lua); #end
 		#if HSCRIPT_ALLOWED HScript.implement(this); #end
 		#if ACHIEVEMENTS_ALLOWED Achievements.addLuaCallbacks(lua); #end
 		#if flxanimate FlxAnimateFunctions.implement(this); #end

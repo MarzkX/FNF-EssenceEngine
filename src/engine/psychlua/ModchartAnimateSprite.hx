@@ -1,7 +1,10 @@
 package engine.psychlua;
 
+import funkin.graphics.FlxAtlasSprite;
+
 #if flxanimate
-class ModchartAnimateSprite extends FlxAnimate
+@:access(funkin.graphics.FlxAtlasSprite)
+class ModchartAnimateSprite extends FlxAtlasSprite
 {
 	public var animOffsets:Map<String, Array<Float>> = new Map<String, Array<Float>>();
 	public function new(?x:Float = 0, ?y:Float = 0, ?path:String, ?settings:FlxAnimate.Settings)

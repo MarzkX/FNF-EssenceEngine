@@ -4,7 +4,6 @@ import engine.backend.animation.PsychAnimationController;
 
 import engine.shaders.RGBPalette;
 
-import flixel.system.FlxAssets.FlxShader;
 import flixel.graphics.frames.FlxFrame;
 
 typedef NoteSplashConfig = {
@@ -21,7 +20,7 @@ class NoteSplash extends FlxSprite
 	private var _textureLoaded:String = null;
 	private var _configLoaded:String = null;
 
-	public static var defaultNoteSplash(default, never):String = 'noteSplashes/noteSplashes';
+	public static var defaultNoteSplash(default, never):String = '${PathStr.NOTE_PATH}splashes/noteSplashes';
 	public static var configs:Map<String, NoteSplashConfig> = new Map<String, NoteSplashConfig>();
 
 	public function new(x:Float = 0, y:Float = 0) {
@@ -123,16 +122,16 @@ class NoteSplash extends FlxSprite
 
 	function loadAnims(skin:String, ?animName:String = null):NoteSplashConfig {
 		maxAnims = 0;
-		frames = Paths.getSparrowAtlas(skin);
+		frames = PathAtlas.sparrow(skin);
 		var config:NoteSplashConfig = null;
 		if(frames == null)
 		{
 			skin = defaultNoteSplash + getSplashSkinPostfix();
-			frames = Paths.getSparrowAtlas(skin);
+			frames = PathAtlas.sparrow(skin);
 			if(frames == null) //if you really need this, you really fucked something up
 			{
 				skin = defaultNoteSplash;
-				frames = Paths.getSparrowAtlas(skin);
+				frames = PathAtlas.sparrow(skin);
 			}
 		}
 		config = precacheConfig(skin);
@@ -158,7 +157,7 @@ class NoteSplash extends FlxSprite
 	{
 		if(configs.exists(skin)) return configs.get(skin);
 
-		var path:String = Paths.getPath('data/noteData/$skin.txt', TEXT);
+		var path:String = Paths.getTextFromFile('data/$skin.txt');
 		var configFile:Array<String> = CoolUtil.coolTextFile(path);
 		if(configFile.length < 1) return null;
 		
@@ -236,52 +235,5 @@ class PixelSplashShaderRef {
 		if(PlayState.isPixelStage) pixel = PlayState.daPixelZoom;
 		shader.uBlocksize.value = [pixel, pixel];
 		//trace('Created shader ' + Conductor.songPosition);
-	}
-}
-
-class PixelSplashShader extends FlxShader
-{
-	@:glFragmentHeader('
-		#pragma header
-		
-		uniform vec3 r;
-		uniform vec3 g;
-		uniform vec3 b;
-		uniform float mult;
-		uniform vec2 uBlocksize;
-
-		vec4 flixel_texture2DCustom(sampler2D bitmap, vec2 coord) {
-			vec2 blocks = openfl_TextureSize / uBlocksize;
-			vec4 color = flixel_texture2D(bitmap, floor(coord * blocks) / blocks);
-			if (!hasTransform) {
-				return color;
-			}
-
-			if(color.a == 0.0 || mult == 0.0) {
-				return color * openfl_Alphav;
-			}
-
-			vec4 newColor = color;
-			newColor.rgb = min(color.r * r + color.g * g + color.b * b, vec3(1.0));
-			newColor.a = color.a;
-			
-			color = mix(color, newColor, mult);
-			
-			if(color.a > 0.0) {
-				return vec4(color.rgb, color.a);
-			}
-			return vec4(0.0, 0.0, 0.0, 0.0);
-		}')
-
-	@:glFragmentSource('
-		#pragma header
-
-		void main() {
-			gl_FragColor = flixel_texture2DCustom(bitmap, openfl_TextureCoordv);
-		}')
-
-	public function new()
-	{
-		super();
 	}
 }

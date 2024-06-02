@@ -1,15 +1,14 @@
 package engine.states.editors;
 
+import funkin.graphics.FlxAtlasSprite;
 import flixel.FlxObject;
 import flixel.graphics.FlxGraphic;
-
 import flixel.animation.FlxAnimation;
 import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.ui.*;
 import flixel.ui.FlxButton;
 import flixel.util.FlxDestroyUtil;
-
 import flixel.addons.ui.FlxUIDropDownMenu;
 
 import openfl.net.FileReference;
@@ -21,7 +20,6 @@ import lime.system.Clipboard;
 import engine.objects.Character;
 import engine.objects.HealthIcon;
 import engine.objects.Bar;
-import funkin.ui.TitleState;
 
 class CharacterEditorState extends MusicBeatState
 {
@@ -813,7 +811,7 @@ class CharacterEditorState extends MusicBeatState
 
 		if(Paths.fileExists('images/' + char.imageFile + '/Animation.json', TEXT))
 		{
-			char.atlas = new FlxAnimate();
+			char.atlas = new FlxAtlasSprite(0, 0);
 			char.atlas.showPivot = false;
 			try
 			{

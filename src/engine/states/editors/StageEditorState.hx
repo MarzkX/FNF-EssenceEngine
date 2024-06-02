@@ -1,10 +1,12 @@
 package engine.states.editors;
 
-import engine.states.editors.ConfirmSubState.ConfirmSubstate;
 import funkin.backend.StageData;
+
+import engine.states.editors.ConfirmSubState.ConfirmSubstate;
 import engine.backend.PsychCamera;
 import engine.objects.Character;
 import engine.psychlua.LuaUtils;
+import engine.psychlua.ModchartSprite;
 
 import flixel.FlxObject;
 import flixel.addons.ui.*;
@@ -18,7 +20,6 @@ import openfl.display.Sprite;
 import openfl.net.FileReference;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
-import engine.psychlua.ModchartSprite;
 import openfl.net.FileFilter;
 
 class StageEditorState extends MusicBeatState
@@ -62,6 +63,8 @@ class StageEditorState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
+
+		checkBGMusic();
 
 		#if FLX_DEBUG
 		camGame = initPsychCamera();
@@ -107,6 +110,17 @@ class StageEditorState extends MusicBeatState
 		super.create();
 	}
 
+	function checkBGMusic()
+	{
+		final musicPath:String = musicOfficial ? 'second' : 'first';
+
+		if(musicPlaying)
+			FlxG.sound.playMusic(PathFile.file('editors/chart/$musicPath.${Paths.SOUND_EXT}', SOUND, 'ingame'), 0.6);
+		else
+			if(FlxG.sound.music.playing)
+				FlxG.sound.music.stop();
+	}
+
 	var showSelectionQuad:Bool = true;
 	function addHelpScreen()
 	{
@@ -125,7 +139,9 @@ class StageEditorState extends MusicBeatState
 		\n ' + btn + ' - Toggle HUD
 		\nF12 - Toggle Selection Rectangle
 		\nHold Shift - Move Objects and Camera 4x faster
-		\nHold Control - Move Objects pixel-by-pixel and Camera 4x slower';
+		\nHold Control - Move Objects pixel-by-pixel and Camera 4x slower
+		\nF3 - Off/On BG Music
+		\nM - Change Music';
 
 		helpBg = new FlxSprite().makeGraphic(1, 1, FlxColor.BLACK);
 		helpBg.scale.set(FlxG.width, FlxG.height);
@@ -156,6 +172,9 @@ class StageEditorState extends MusicBeatState
 		helpTexts.active = helpTexts.visible = false;
 		add(helpTexts);
 	}
+
+	static var musicPlaying:Bool = true;
+	static var musicOfficial:Bool = false;
 
 	function updateSpriteList()
 	{
@@ -328,9 +347,9 @@ class StageEditorState extends MusicBeatState
 		buttonDuplicate.cameras = [camHUD];
 		buttonDuplicate.color = FlxColor.BLUE;
 		buttonDuplicate.label.color = FlxColor.WHITE;
-		add(buttonDuplicate);
+		//add(buttonDuplicate);
 	
-		buttonDelete = new FlxButton(buttonX, buttonY + 120, 'Delete', function()
+		buttonDelete = new FlxButton(buttonX, buttonY + 90, 'Delete', function()
 		{
 			var selected:Int = spriteListRadioGroup.selectedIndex;
 			if(selected < 0) return;
@@ -1310,6 +1329,19 @@ class StageEditorState extends MusicBeatState
 			if(txt.hasFocus) canPress = false;
 
 		if(!canPress) return;
+
+		if(FlxG.keys.justPressed.F3)
+		{
+			musicPlaying = !musicPlaying;
+			checkBGMusic();
+		}
+
+		if(musicPlaying)
+			if(FlxG.keys.justPressed.M)
+			{
+				musicOfficial = !musicOfficial;
+				checkBGMusic();
+			}
 
 		if(FlxG.keys.justPressed.ESCAPE)
 		{

@@ -39,12 +39,13 @@ class ControlsSubState extends MusicBeatSubstate
 		[false, 'Up', 'volume_up', 'Volume Up'],
 		[false, 'Down', 'volume_down', 'Volume Down'],
 		[false],
-		[false, 'PLUGINS'],
-		[false, 'Screenshot', 'screenshot', 'Screenshot'],
+		[false, 'SCREENSHOT'],
+		[false, 'Key', 'screenshot', 'Screenshot'],
 		[false],
 		[false, 'DEBUG'],
 		[false, 'Key 1', 'debug_1', 'Debug Key #1'],
-		[false, 'Key 2', 'debug_2', 'Debug Key #2']
+		[false, 'Key 2', 'debug_2', 'Debug Key #2'],
+		[false, 'Key 3', 'debug_3', 'Debug Key #3']
 	];
 	var curOptions:Array<Int>;
 	var curOptionsValid:Array<Int>;
@@ -75,7 +76,7 @@ class ControlsSubState extends MusicBeatSubstate
 		options.push([true]);
 		options.push([true, defaultKey]);
 
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg = new FlxSprite().loadGraphic(PathImage.def_bg());
 		bg.color = keyboardColor;
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.screenCenter();
@@ -101,7 +102,7 @@ class ControlsSubState extends MusicBeatSubstate
 		grpBinds = new FlxTypedGroup<Alphabet>();
 		add(grpBinds);
 
-		controllerSpr = new FlxSprite(50, 40).loadGraphic(Paths.image('controllertype'), true, 82, 60);
+		controllerSpr = new FlxSprite(50, 40).loadGraphic(PathImage.ui('controllertype'), true, 82, 60);
 		controllerSpr.antialiasing = ClientPrefs.data.antialiasing;
 		controllerSpr.animation.add('keyboard', [0], 1, false);
 		controllerSpr.animation.add('gamepad', [1], 1, false);

@@ -7,6 +7,7 @@ import engine.shaders.RGBPalette.RGBShaderReference;
 
 class StrumNote extends FlxSprite
 {
+	public static var defaultStrumSkin(default, never):String = '${PathStr.NOTE_PATH}STRUMS_assets';
 	public var rgbShader:RGBShaderReference;
 	public var resetAnim:Float = 0;
 	private var noteData:Int = 0;
@@ -51,8 +52,8 @@ class StrumNote extends FlxSprite
 		super(x, y);
 
 		var skin:String = null;
-		if(PlayState.SONG != null && PlayState.SONG.arrowSkin != null && PlayState.SONG.arrowSkin.length > 1) skin = PlayState.SONG.arrowSkin;
-		else skin = Note.defaultNoteSkin;
+		if(PlayState.SONG != null && PlayState.SONG.strumSkin != null && PlayState.SONG.strumSkin.length > 1) skin = PlayState.SONG.strumSkin;
+		else skin = defaultStrumSkin;
 
 		var customSkin:String = skin + Note.getNoteSkinPostfix();
 		if(Paths.fileExists('images/$customSkin.png', IMAGE)) skin = customSkin;
@@ -68,10 +69,10 @@ class StrumNote extends FlxSprite
 
 		if(PlayState.isPixelStage)
 		{
-			loadGraphic(Paths.image('pixelUI/' + texture));
+			loadGraphic(Paths.image('${PathStr.NOTE_PATH}pixel/' + texture));
 			width = width / 4;
 			height = height / 5;
-			loadGraphic(Paths.image('pixelUI/' + texture), true, Math.floor(width), Math.floor(height));
+			loadGraphic(Paths.image('${PathStr.NOTE_PATH}pixel/' + texture), true, Math.floor(width), Math.floor(height));
 
 			antialiasing = false;
 			setGraphicSize(Std.int(width * PlayState.daPixelZoom));

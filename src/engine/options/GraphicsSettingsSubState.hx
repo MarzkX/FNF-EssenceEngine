@@ -62,7 +62,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 		#end
 
 		super();
-		insert(1, boyfriend);
+		bfGrp.insert(1, boyfriend);
 	}
 
 	function onChangeAntiAliasing()

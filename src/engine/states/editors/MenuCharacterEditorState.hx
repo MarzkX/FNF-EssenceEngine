@@ -20,11 +20,13 @@ class MenuCharacterEditorState extends MusicBeatState
 	var characterFile:MenuCharacterFile = null;
 	var txtOffsets:FlxText;
 	var defaultCharacters:Array<String> = ['dad', 'bf', 'gf'];
-
+	static var musicPlaying:Bool = true;
+	static var musicOfficial:Bool = false;
 	override function create() {
 		characterFile = {
 			image: 'Menu_Dad',
 			scale: 1,
+			colors: [249, 207, 81],
 			position: [0, 0],
 			idle_anim: 'M Dad Idle',
 			confirm_anim: 'M Dad Idle',
@@ -43,12 +45,13 @@ class MenuCharacterEditorState extends MusicBeatState
 			weekCharacterThing.alpha = 0.2;
 			grpWeekCharacters.add(weekCharacterThing);
 		}
+		checkBGMusic();
 
 		add(new FlxSprite(0, 56).makeGraphic(FlxG.width, 386, 0xFFF9CF51));
 		add(grpWeekCharacters);
 
 		txtOffsets = new FlxText(20, 10, 0, "[0, 0]", 32);
-		txtOffsets.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
+		txtOffsets.setFormat(Paths.font('vcr.ttf'), 32, FlxColor.WHITE, CENTER);
 		txtOffsets.alpha = 0.7;
 		add(txtOffsets);
 
@@ -63,8 +66,20 @@ class MenuCharacterEditorState extends MusicBeatState
 		Cursor.show();
 
 		updateCharTypeBox();
+		updateColor();
 
 		super.create();
+	}
+
+	function checkBGMusic()
+	{
+		final musicPath:String = musicOfficial ? 'second' : 'first';
+
+		if(musicPlaying)
+			FlxG.sound.playMusic(PathFile.file('editors/chart/$musicPath.${Paths.SOUND_EXT}', SOUND, 'ingame'), 0.6);
+		else
+			if(FlxG.sound.music.playing)
+				FlxG.sound.music.stop();
 	}
 
 	var UI_typebox:FlxUITabMenu;
@@ -86,7 +101,7 @@ class MenuCharacterEditorState extends MusicBeatState
 			{name: 'Character', label: 'Character'},
 		];
 		UI_mainbox = new FlxUITabMenu(null, tabs, true);
-		UI_mainbox.resize(240, 180);
+		UI_mainbox.resize(240, 220);
 		UI_mainbox.x = FlxG.width - UI_mainbox.width - 100;
 		UI_mainbox.y = FlxG.height - UI_mainbox.height - 50;
 		UI_mainbox.scrollFactor.set();
@@ -147,6 +162,9 @@ class MenuCharacterEditorState extends MusicBeatState
 	var idleInputText:FlxUIInputText;
 	var confirmInputText:FlxUIInputText;
 	var scaleStepper:FlxUINumericStepper;
+	var charColorR:FlxUINumericStepper;
+	var charColorG:FlxUINumericStepper;
+	var charColorB:FlxUINumericStepper;
 	var flipXCheckbox:FlxUICheckBox;
 	function addCharacterUI() {
 		var tab_group = new FlxUI(null, UI_mainbox);
@@ -159,14 +177,18 @@ class MenuCharacterEditorState extends MusicBeatState
 		confirmInputText = new FlxUIInputText(10, idleInputText.y + 35, 100, characterFile.confirm_anim, 8);
 		blockPressWhileTypingOn.push(confirmInputText);
 
-		flipXCheckbox = new FlxUICheckBox(10, confirmInputText.y + 30, null, null, "Flip X", 100);
+		charColorR = new FlxUINumericStepper(10, confirmInputText.y + 40, 20, characterFile.colors[0], 0, 255, 0);
+		charColorG = new FlxUINumericStepper(80, charColorR.y, 20, characterFile.colors[1], 0, 255, 0);
+		charColorB = new FlxUINumericStepper(150, charColorR.y, 20, characterFile.colors[2], 0, 255, 0);
+
+		flipXCheckbox = new FlxUICheckBox(10, charColorR.y + 30, null, null, "Flip X", 100);
 		flipXCheckbox.callback = function()
 		{
 			grpWeekCharacters.members[curTypeSelected].flipX = flipXCheckbox.checked;
 			characterFile.flipX = flipXCheckbox.checked;
 		};
 
-		var reloadImageButton:FlxButton = new FlxButton(140, confirmInputText.y + 30, "Reload Char", function() {
+		var reloadImageButton:FlxButton = new FlxButton(140, flipXCheckbox.y, "Reload Char", function() {
 			reloadSelectedCharacter();
 		});
 		
@@ -176,6 +198,11 @@ class MenuCharacterEditorState extends MusicBeatState
 		tab_group.add(new FlxText(10, imageInputText.y - 18, 0, 'Image file name:'));
 		tab_group.add(new FlxText(10, idleInputText.y - 18, 0, 'Idle animation on the .XML:'));
 		tab_group.add(new FlxText(scaleStepper.x, scaleStepper.y - 18, 0, 'Scale:'));
+		tab_group.add(new FlxText(charColorR.x, charColorR.y - 18, 0, 'Character R/G/B Colors:'));
+
+		tab_group.add(charColorR);
+		tab_group.add(charColorG);
+		tab_group.add(charColorB);
 		tab_group.add(flipXCheckbox);
 		tab_group.add(reloadImageButton);
 		tab_group.add(confirmDescText);
@@ -217,7 +244,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		var char:MenuCharacter = grpWeekCharacters.members[curTypeSelected];
 
 		char.alpha = 1;
-		char.frames = Paths.getSparrowAtlas('menucharacters/' + characterFile.image);
+		char.frames = Paths.getSparrowAtlas('${PathStr.MENU_STORY_PATH}characters/' + characterFile.image);
 		char.animation.addByPrefix('idle', characterFile.idle_anim, 24);
 		if(curTypeSelected == 1) char.animation.addByPrefix('confirm', characterFile.confirm_anim, 24, false);
 		char.flipX = (characterFile.flipX == true);
@@ -246,6 +273,8 @@ class MenuCharacterEditorState extends MusicBeatState
 			if (sender == scaleStepper) {
 				characterFile.scale = scaleStepper.value;
 				reloadSelectedCharacter();
+			} else if (sender == charColorB || sender == charColorG || sender == charColorR) {
+				updateColor();
 			}
 		}
 	}
@@ -267,6 +296,19 @@ class MenuCharacterEditorState extends MusicBeatState
 			if(FlxG.keys.justPressed.ESCAPE) {
 				state(() -> new engine.states.editors.MasterEditorMenu());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			}
+
+			if(FlxG.keys.justPressed.F2)
+		{
+			musicPlaying = !musicPlaying;
+			checkBGMusic();
+		}
+
+		if(musicPlaying)
+			if(FlxG.keys.justPressed.M)
+			{
+				musicOfficial = !musicOfficial;
+				checkBGMusic();
 			}
 
 			var shiftMult:Int = 1;
@@ -300,6 +342,14 @@ class MenuCharacterEditorState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+	}
+
+	function updateColor() {
+		characterFile.colors[0] = Math.round(charColorR.value);
+		characterFile.colors[1] = Math.round(charColorG.value);
+		characterFile.colors[2] = Math.round(charColorB.value);
+
+		grpWeekCharacters.members[curTypeSelected].color = FlxColor.fromRGB(characterFile.colors[0], characterFile.colors[1], characterFile.colors[2]);
 	}
 
 	function updateOffset() {
@@ -345,6 +395,9 @@ class MenuCharacterEditorState extends MusicBeatState
 					imageInputText.text = characterFile.image;
 					idleInputText.text = characterFile.image;
 					confirmInputText.text = characterFile.image;
+					charColorR.value = characterFile.colors[0];
+					charColorG.value = characterFile.colors[1];
+					charColorB.value = characterFile.colors[2];
 					scaleStepper.value = characterFile.scale;
 					updateOffset();
 					_file = null;

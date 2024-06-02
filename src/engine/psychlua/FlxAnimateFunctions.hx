@@ -1,6 +1,7 @@
 package engine.psychlua;
 
 import openfl.utils.Assets;
+import funkin.graphics.FlxAtlasSprite;
 
 #if (LUA_ALLOWED && flxanimate)
 class FlxAnimateFunctions
@@ -25,14 +26,14 @@ class FlxAnimateFunctions
 		});
 
 		Lua_helper.add_callback(lua, "loadAnimateAtlas", function(tag:String, folderOrImg:Dynamic, ?spriteJson:Dynamic = null, ?animationJson:Dynamic = null) {
-			var spr:FlxAnimate = PlayState.instance.variables.get(tag);
+			var spr:FlxAtlasSprite = PlayState.instance.variables.get(tag);
 			if(spr != null) Paths.loadAnimateAtlas(spr, folderOrImg, spriteJson, animationJson);
 		});
 		
 		Lua_helper.add_callback(lua, "addAnimationBySymbol", function(tag:String, name:String, symbol:String, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0)
 		{
 			var obj:Dynamic = PlayState.instance.variables.get(tag);
-			if(cast (obj, FlxAnimate) == null) return false;
+			if(cast (obj, FlxAtlasSprite) == null) return false;
 
 			obj.anim.addBySymbol(name, symbol, framerate, loop, matX, matY);
 			if(obj.anim.lastPlayedAnim == null)
@@ -46,7 +47,7 @@ class FlxAnimateFunctions
 		Lua_helper.add_callback(lua, "addAnimationBySymbolIndices", function(tag:String, name:String, symbol:String, ?indices:Any = null, ?framerate:Float = 24, ?loop:Bool = false, ?matX:Float = 0, ?matY:Float = 0)
 		{
 			var obj:Dynamic = PlayState.instance.variables.get(tag);
-			if(cast (obj, FlxAnimate) == null) return false;
+			if(cast (obj, FlxAtlasSprite) == null) return false;
 
 			if(indices == null)
 				indices = [0];

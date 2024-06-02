@@ -8,6 +8,8 @@ import flixel.addons.ui.FlxUINumericStepper;
 
 class NoteSplashDebugState extends MusicBeatState
 {
+	static var musicPlaying:Bool = true;
+	static var musicOfficial:Bool = false;
 	var config:NoteSplashConfig;
 	var forceFrame:Int = -1;
 	var curSelected:Int = 0;
@@ -174,11 +176,23 @@ class NoteSplashDebugState extends MusicBeatState
 		missingText.scrollFactor.set();
 		missingText.visible = false;
 		add(missingText);
+		checkBGMusic();
 
 		loadFrames();
 		changeSelection();
 		super.create();
 		Cursor.show();
+	}
+
+	function checkBGMusic()
+	{
+		final musicPath:String = musicOfficial ? 'second' : 'first';
+
+		if(musicPlaying)
+			FlxG.sound.playMusic(PathFile.file('editors/chart/$musicPath.${Paths.SOUND_EXT}', SOUND, 'ingame'), 0.6);
+		else
+			if(FlxG.sound.music.playing)
+				FlxG.sound.music.stop();
 	}
 
 	var curAnim:Int = 1;
@@ -202,6 +216,19 @@ class NoteSplashDebugState extends MusicBeatState
 		
 		if (FlxG.keys.justPressed.A) changeSelection(-1);
 		else if (FlxG.keys.justPressed.D) changeSelection(1);
+
+		if(FlxG.keys.justPressed.F2)
+		{
+			musicPlaying = !musicPlaying;
+			checkBGMusic();
+		}
+
+		if(musicPlaying)
+			if(FlxG.keys.justPressed.M)
+			{
+				musicOfficial = !musicOfficial;
+				checkBGMusic();
+			}
 
 		if(maxAnims < 1) return;
 
@@ -313,7 +340,7 @@ class NoteSplashDebugState extends MusicBeatState
 	var copiedArray:Array<Float> = null;
 	function loadFrames()
 	{
-		texturePath = 'noteSplashes/' + textureName;
+		texturePath = '${PathStr.NOTE_PATH}splashes/' + textureName;
 		splashes.forEachAlive(function(spr:FlxSprite) {
 			spr.frames = Paths.getSparrowAtlas(texturePath);
 		});

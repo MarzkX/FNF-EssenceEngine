@@ -41,7 +41,7 @@ class OptionsState extends MusicBeatState
 		states.GameJoltState.isOptions = true;
 		#end
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(PathImage.def_bg());
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.color = 0xFFea71fd;
 		bg.updateHitbox();
@@ -103,6 +103,9 @@ class OptionsState extends MusicBeatState
 		}
 		else if (controls.ACCEPT) openSelectedSubstate(options[curSelected]);
 	}
+
+	var leftTween:FlxTween;
+	var rightTween:FlxTween;
 	
 	function changeSelection(change:Int = 0) {
 		curSelected += change;
@@ -120,13 +123,31 @@ class OptionsState extends MusicBeatState
 			item.alpha = 0.6;
 			if (item.targetY == 0) {
 				item.alpha = 1;
-				selectorLeft.x = item.x - 63;
-				selectorLeft.y = item.y;
-				selectorRight.x = item.x + item.width + 15;
-				selectorRight.y = item.y;
+
+				if(leftTween != null)
+					leftTween.cancel();
+		
+				if(rightTween != null)
+					rightTween.cancel();
+
+				leftTween = FlxTween.tween(selectorLeft, {x: item.x - 63, y: item.y}, 0.4, {
+					ease: FlxEase.quadOut,
+					onComplete: function(t:FlxTween)
+					{
+						t = null;
+					}
+				});
+
+				rightTween = FlxTween.tween(selectorRight, {x: item.x + item.width + 15, y: item.y}, 0.4, {
+					ease: FlxEase.quadOut,
+					onComplete: function(t:FlxTween)
+					{
+						t = null;
+					}
+				});
 			}
 		}
-		FlxG.sound.play(Paths.sound('scrollMenu'));
+		FlxG.sound.play(PathSound.file('scrollMenu'));
 	}
 
 	override function destroy()

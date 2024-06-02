@@ -94,7 +94,14 @@ class HScript extends SScript
 		set('FlxColor', CustomFlxColor);
 		set('Countdown', engine.backend.BaseStage.Countdown);
 		set('PlayState', PlayState);
+		set('FlxStrip', flixel.FlxStrip);
 		set('Paths', Paths);
+		set('ABot', funkin.audio.visualize.ABot);
+		set('ABotVis', funkin.audio.visualize.ABotVis);
+		set('MeshRender', funkin.graphics.rendering.MeshRender);
+		set('FlxGroup', flixel.group.FlxGroup);
+		set('FlxTypedGroup', flixel.group.FlxGroup.FlxTypedGroup);
+		set('FlxSpriteGroup', flixel.group.FlxSpriteGroup);
 		set('Conductor', Conductor);
 		set('ClientPrefs', ClientPrefs);
 		#if ACHIEVEMENTS_ALLOWED
@@ -111,6 +118,7 @@ class HScript extends SScript
 		set('StringTools', StringTools);
 		#if flxanimate
 		set('FlxAnimate', FlxAnimate);
+		set('FlxAtlasSprite', funkin.graphics.FlxAtlasSprite);
 		#end
 
 		// Functions & Variables

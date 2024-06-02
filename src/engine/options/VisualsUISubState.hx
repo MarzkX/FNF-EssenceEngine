@@ -60,12 +60,23 @@ class VisualsUISubState extends BaseOptionsMenu
 				'splashSkin',
 				'string',
 				noteSplashes);
-			addOption(option);
+			//addOption(option);
 		}
 
 		var option:Option = new Option('Note Splash Opacity',
 			'How much transparent should the Note Splashes be.',
 			'splashAlpha',
+			'percent');
+		option.scrollSpeed = 1.6;
+		option.minValue = 0.0;
+		option.maxValue = 1;
+		option.changeValue = 0.1;
+		option.decimals = 1;
+		addOption(option);
+
+		var option:Option = new Option('Note BG Opacity',
+		    'Black BG for notes, transparent.',
+			'noteBGOpacity',
 			'percent');
 		option.scrollSpeed = 1.6;
 		option.minValue = 0.0;
@@ -109,7 +120,7 @@ class VisualsUISubState extends BaseOptionsMenu
 		addOption(option);
 
 		var option:Option = new Option('Camera Note Move',
-		    'If unchecked, camera won\'t moving on note press.',
+		    'If unchecked, camera won\'t moving\non note press from songs where camera moving.',
 			'camMove',
 			'bool');
 		addOption(option);
@@ -117,6 +128,12 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Camera Zooms',
 			"If unchecked, the camera won't zoom in on a beat hit.",
 			'camZooms',
+			'bool');
+		addOption(option);
+
+		var option:Option = new Option('Icon Bop on Hit',
+		    'Uncheck, icons don\'t bop in on a beat hit.',
+			'iconScale',
 			'bool');
 		addOption(option);
 
@@ -250,7 +267,7 @@ class VisualsUISubState extends BaseOptionsMenu
 
 	function changeNoteSkin(note:StrumNote)
 	{
-		var skin:String = Note.defaultNoteSkin;
+		var skin:String = StrumNote.defaultStrumSkin;
 		var customSkin:String = skin + Note.getNoteSkinPostfix();
 		if(Paths.fileExists('images/$customSkin.png', IMAGE)) skin = customSkin;
 

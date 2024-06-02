@@ -1,5 +1,8 @@
 package engine.states.editors;
 
+import funkin.ui.transition.Stickers.StickerSubState;
+import flixel.addons.transition.FlxTransitionableState;
+import funkin.util.WindowsUtil;
 import funkin.backend.WeekData;
 import engine.objects.Character;
 
@@ -8,12 +11,13 @@ class MasterEditorMenu extends MusicBeatState
 	var options:Array<String> = [
 		'Chart Editor',
 		'Character Editor',
+		'Level Editor',
 		'Stage Editor',
-		'Week Editor',
 		'Menu Character Editor',
 		'Dialogue Editor',
 		'Dialogue Portrait Editor',
-		'Note Splash Debug',
+		//'Note Splash Debug',
+		//'Test Sticker Transition',
 		//'Test Chart',
 		'Open Crash Logs Folder'
 	];
@@ -32,9 +36,12 @@ class MasterEditorMenu extends MusicBeatState
 		DiscordClient.changePresence("Editors Main Menu", null);
 		#end
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		if(!FlxG.sound.music.playing)
+			FlxG.sound.playMusic(PathMusic.def());
+
+		var bg:FlxSprite = new FlxSprite().loadGraphic(PathImage.def_bg());
 		bg.scrollFactor.set();
-		bg.color = 0xFF353535;
+		bg.color = 0xFF027A56;
 		add(bg);
 
 		grpTexts = new FlxTypedGroup<Alphabet>();
@@ -42,8 +49,11 @@ class MasterEditorMenu extends MusicBeatState
 
 		for (i in 0...options.length)
 		{
-			var leText:Alphabet = new Alphabet(90, 320, options[i], true);
+			var leText:Alphabet = new Alphabet(250, 320, options[i], true);
 			leText.isMenuItem = true;
+			leText.distancePerItem.y = 100;
+			leText.screenCenter(X);
+			leText.changeX = false;
 			leText.targetY = i;
 			grpTexts.add(leText);
 			leText.snapToPosition();
@@ -116,8 +126,8 @@ class MasterEditorMenu extends MusicBeatState
 						loading(new StageEditorState(), 'Stage Editor');
 					case 'Character Editor':
 						selected = true;
-						loading(new CharacterEditorState(Character.DEFAULT_CHARACTER, false), 'Character Editor');
-					case 'Week Editor':
+						loading(new CharacterEditor(Character.DEFAULT_CHARACTER, false), 'Character Editor');
+					case 'Level Editor':
 						selected = true;
 						state(() -> new WeekEditorState());
 					case 'Menu Character Editor':
@@ -132,17 +142,14 @@ class MasterEditorMenu extends MusicBeatState
 					case 'Note Splash Debug':
 						selected = true;
 						state(() -> new NoteSplashDebugState());
+					case 'Test Sticker Transition':
+						selected = true;
+						openSubState(new StickerSubState(() -> new MainMenuState()));
 					case 'Test Chart'://felt it would be cool maybe
 					    selected = true;
 						loading(new ChartingTest(), 'Chart Editor');
 					case 'Open Crash Logs Folder':
-						#if sys
-						var	appName:String = openfl.Lib.application.meta.get('file')+".exe";
-						var parentPath = Sys.programPath().substr(0, Sys.programPath().length-appName.length);
-						Sys.command('start '+parentPath+"\\bin\\crashlogs\\");
-						#else
-						trace('what yoo system bro');
-						#end
+						WindowsUtil.openFolder('bin/crashlogs');
 						return;
 				}
 				FlxG.sound.music.volume = 0;

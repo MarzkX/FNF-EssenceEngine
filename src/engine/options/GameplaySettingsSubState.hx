@@ -41,6 +41,12 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		addOption(option);
 		option.onChange = onChangeAutoPause;
 
+		var option:Option = new Option('Sustains as One Note',
+			"If checked, Hold Notes can't be pressed if you miss,\nand count as a single Hit/Miss.\nUncheck this if you prefer the old Input System.",
+			'guitarHeroSustains',
+			'bool');
+		addOption(option);
+
 		var option:Option = new Option('Disable Reset Button',
 			"If checked, pressing Reset won't do anything.",
 			'noReset',
@@ -99,6 +105,16 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.maxValue = 135;
 		addOption(option);
 
+		var option:Option = new Option('Shit Hit Window',
+		    'Changes how many frames you have for\nhitting a "Shit" in milliseconds.',
+			'shitWindow',
+			'int');
+		option.displayFormat = '%vms';
+		option.scrollSpeed = 60;
+		option.minValue = 15;
+		option.maxValue = 135;
+		addOption(option);
+
 		var option:Option = new Option('Safe Frames',
 			'Changes how many frames you have for\nhitting a note earlier or late.',
 			'safeFrames',
@@ -107,12 +123,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.minValue = 2;
 		option.maxValue = 10;
 		option.changeValue = 0.1;
-		addOption(option);
-
-		var option:Option = new Option('Sustains as One Note',
-			"If checked, Hold Notes can't be pressed if you miss,\nand count as a single Hit/Miss.\nUncheck this if you prefer the old Input System.",
-			'guitarHeroSustains',
-			'bool');
 		addOption(option);
 
 		super();

@@ -15,12 +15,14 @@ import haxe.Json;
 import lime.system.Clipboard;
 
 import engine.objects.TypedAlphabet;
-
 import engine.cutscenes.DialogueBoxPsych;
 import engine.cutscenes.DialogueCharacter;
 
 class DialogueCharacterEditorState extends MusicBeatState
 {
+	static var musicPlaying:Bool = true;
+	static var musicOfficial:Bool = false;
+
 	var box:FlxSprite;
 	var daText:TypedAlphabet = null;
 
@@ -29,7 +31,9 @@ class DialogueCharacterEditorState extends MusicBeatState
 	\nQ/E - Zoom out/in
 	\nR - Reset Camera
 	\nH - Toggle Speech Bubble
-	\nSpace - Reset text';
+	\nSpace - Reset text
+	\nF2 - On/Off BG Music
+	\nM - Change Music';
 
 	private static var TIP_TEXT_OFFSET:String =
 	'JKLI - Move camera (Hold Shift to move 4x faster)
@@ -66,7 +70,8 @@ class DialogueCharacterEditorState extends MusicBeatState
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD, false);
 		FlxG.cameras.setDefaultDrawTarget(camGame, true);
-		
+		checkBGMusic();
+
 		mainGroup = new FlxSpriteGroup();
 		mainGroup.cameras = [camGame];
 		hudGroup = new FlxSpriteGroup();
@@ -145,6 +150,17 @@ class DialogueCharacterEditorState extends MusicBeatState
 		updateCharTypeBox();
 		
 		super.create();
+	}
+
+	function checkBGMusic()
+	{
+		final musicPath:String = musicOfficial ? 'second' : 'first';
+
+		if(musicPlaying)
+			FlxG.sound.playMusic(PathFile.file('editors/chart/$musicPath.${Paths.SOUND_EXT}', SOUND, 'ingame'), 0.6);
+		else
+			if(FlxG.sound.music.playing)
+				FlxG.sound.music.stop();
 	}
 
 	var UI_typebox:FlxUITabMenu;
@@ -492,6 +508,19 @@ class DialogueCharacterEditorState extends MusicBeatState
 				character.animation.curAnim.restart();
 			}
 		}
+
+		if(FlxG.keys.justPressed.F2)
+		{
+			musicPlaying = !musicPlaying;
+			checkBGMusic();
+		}
+
+		if(musicPlaying)
+			if(FlxG.keys.justPressed.M)
+			{
+				musicOfficial = !musicOfficial;
+				checkBGMusic();
+			}
 
 		var blockInput:Bool = false;
 		for (inputText in blockPressWhileTypingOn) {
