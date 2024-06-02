@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Essence Engine" file="Essence" packageName="com.essence.engine" package="com.essence.engine" main="Main" version="0.1.1" company="Mr7kX" />
+	<app title="Friday Night Funkin': Essence Engine" file="Funkin" packageName="com.essence.engine" package="com.essence.engine" main="Main" version="0.1.1" company="Mr7kX" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -23,6 +23,7 @@
 	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="ESSENCE_WATERMARKS"/>
 	<!--define name="GAMEJOLT_ALLOWED" if="desktop" / <- you're in a source code... ok-->
+	<define name="PROTOTYPE" if="desktop" />
 	<define name="HSCRIPT_ALLOWED" if="desktop" />
 	<define name="LUA_ALLOWED" if="desktop" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
@@ -62,8 +63,12 @@
 	<!-- Assets -->
 	<assets path="bin/fonts"            embed='false'/>
 
-	<assets path="bin/FlixelCrashHandler.exe" rename="FlixelCrashHandler.exe" embed='false' if="windows"/>
-	<assets path="bin/crashassets/" rename='bin/crashlogs/assets' embed='false'/>
+	<!--section if="windows"-->
+		<!--assets path="bin/FlixelCrashHandler.exe" rename="bin/withbugs/FlixelCrashHandler.exe" embed='false' if="CRASH_HANDLER_WITHBUGS"/-->
+		<!--assets path="bin/crashassets/" rename='bin/withbugs/assets' embed='false' if="CRASH_HANDLER_WITHBUGS"/-->
+		<!--assets path="bin/FlixelCrashHandler.exe" rename="FlixelCrashHandler.exe" embed='false' unless="CRASH_HANDLER_WITHBUGS"/-->
+		<!--assets path="bin/crashassets/" rename='bin/crashlogs/assets' embed='false' unless="CRASH_HANDLER_WITHBUGS" -->
+	<!--/section-->
 
 	<assets path="funkin/mainFiles/"    rename='funkin'          exclude="*.ogg" if="web"/>
 	<assets path="funkin/mainFiles/"    rename='funkin'          exclude="*.mp3" unless="web"/>
@@ -90,9 +95,6 @@
 		<assets path="funkin/gamejolt"  library="gamejolt"      embed='false'   if='linux'/>
 	</section>
 
-	<assets path="funkin/shaders"       library="shaders"       embed='true'    if="windows"/>
-	<assets path="funkin/shaders"       library="shaders"       embed='false'   if="linux"/>
-
 	<library name="videos"        preload="true" if="VIDEOS_ALLOWED"/>
 	<library name="songs"         preload="true" />
 	<library name="week_assets"   preload="true" />
@@ -115,20 +117,21 @@
 	<haxelib name="haxeui-core" /> <!-- UI framework -->
 	<haxelib name="haxeui-flixel" /> <!-- Integrate HaxeUI with Flixel -->
 	<haxelib name="thx.semver" /> <!-- Version string handling -->
+	<haxelib name="funkin.vis"/>
 	
 	<!--Psych stuff needed-->
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<haxelib name="SScript" if="HSCRIPT_ALLOWED"/>
 	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
-	<haxelib name="hxdiscord_rpc" if="DISCORD_ALLOWED"/>
+	<haxelib name="discord_rpc" if="DISCORD_ALLOWED"/>
 	<haxelib name="flxanimate"/>
 
 	<!-- Disable Discord IO Thread -->
-	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="hxdiscord_rpc" />
+	<haxedef name="DISCORD_DISABLE_IO_THREAD" if="discord_rpc" />
 	<haxedef name="NO_PRECOMPILED_HEADERS" if="linux" />
 
 	<!-- Enables a terminal log prompt on debug builds -->
-	<haxelib name="hxcpp-debug-server" if="debug"/>
+	<haxelib name="hxcpp_debug_server" if="debug"/>
 	<haxedef name="HXC_LIBVLC_LOGGING" if="VIDEOS_ALLOWED debug" />
 
 	<ndll name="systools" haxelib="systools" />
