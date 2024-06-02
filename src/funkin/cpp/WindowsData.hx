@@ -48,7 +48,9 @@ class WindowsData
 	')
 	#end
 	public static function obtainRAM()
+	{
 		return 0;
+	}
 
 	#if windows
 	@:functionCode('
@@ -61,6 +63,8 @@ class WindowsData
     ')
 	@:noCompletion
 	public static function _setWindowColorMode(mode:Int)
+	{
+	}
 
 	public static function setWindowColorMode(mode:WindowColorMode)
 	{
@@ -82,6 +86,8 @@ class WindowsData
 	')
 	@:noCompletion
 	public static function _setWindowLayered()
+	{
+	}
 
 	@:functionCode('
         HWND window = GetActiveWindow();
@@ -104,7 +110,9 @@ class WindowsData
 	 * @param alpha 
 	 */
 	public static function setWindowAlpha(alpha:Float)
+	{
 		return alpha;
+	}
 	#end
 }
 
