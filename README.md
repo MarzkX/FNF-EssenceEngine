@@ -8,7 +8,7 @@ In the future, it is planned (FOR GAMEJOLT REPOST) to support GameJolt for mods 
 
 ## Installation:
 
-Refer to [the Build Instructions](bin/setup/README.md)
+Refer to [the Build Instructions](bin/setup/)
 
 ## Customization:
 [Gamejolt](https://gamejolt.com/) support!
