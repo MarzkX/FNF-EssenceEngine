@@ -1,6 +1,6 @@
 {
 	"song": {
-		"player1": "bf-holding-gf",
+		"player1": "bf-and-gf",
 		"events": [],
 		"gfVersion": "pico-speaker",
 		"notes": [
@@ -2403,12 +2403,6 @@
 			{
 				"altAnim": true,
 				"sectionNotes": [
-					[
-						62022.4727,
-						1,
-						0,
-						"No Animation"
-					],
 					[
 						62022.4727,
 						5,
@@ -5060,11 +5054,11 @@
 				"mustHitSection": true
 			},
 			{
-				"gfSection": false,
 				"lengthInSteps": 16,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
+				"altAnim": false,
+				"gfSection": false,
 				"bpm": 178,
 				"changeBPM": false,
 				"mustHitSection": true
@@ -5072,12 +5066,12 @@
 		],
 		"player2": "tankman",
 		"player3": null,
+		"gameOverChar": "bf-holding-gf-dead",
 		"song": "Stress",
-		"stage": "tank",
+		"stage": "tankmanBattlefield",
 		"needsVoices": true,
 		"validScore": true,
 		"bpm": 178,
-		"speed": 2.6,
-		"gameOverChar": "bf-holding-gf-dead"
+		"speed": 2.6
 	}
 }

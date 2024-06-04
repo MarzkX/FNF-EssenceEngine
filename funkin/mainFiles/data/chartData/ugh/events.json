@@ -1,129 +1,66 @@
 {
 	"song": {
-		"speed": 2.3,
-		"stage": "tank",
-		"player1": "bf",
-		"player2": "tankman",
-		"player3": null,
 		"events": [
 			[
-				9375,
+				5625,
 				[
 					[
-						"Add Camera Zoom",
-						"",
-						""
+						"Play Animation",
+						"ugh",
+						"dad"
 					]
 				]
 			],
 			[
-				9750,
+				41625,
 				[
 					[
-						"Add Camera Zoom",
-						"",
-						""
+						"Play Animation",
+						"ugh",
+						"dad"
 					]
 				]
 			],
 			[
-				10125,
+				49125,
 				[
 					[
-						"Add Camera Zoom",
-						"",
-						""
+						"Play Animation",
+						"ugh",
+						"dad"
 					]
 				]
 			],
 			[
-				10687.5,
+				50625,
 				[
 					[
-						"Add Camera Zoom",
-						"",
-						""
+						"Play Animation",
+						"ugh",
+						"dad"
 					]
 				]
 			],
 			[
-				10875,
+				50718.75,
 				[
 					[
-						"Add Camera Zoom",
-						"",
-						""
+						"Play Animation",
+						"ugh",
+						"dad"
 					]
 				]
 			],
 			[
-				11062.5,
+				77625,
 				[
 					[
-						"Add Camera Zoom",
-						"",
-						""
-					]
-				]
-			],
-			[
-				11250,
-				[
-					[
-						"Add Camera Zoom",
-						"0.03",
-						"0.06"
-					]
-				]
-			],
-			[
-				11437.5,
-				[
-					[
-						"Add Camera Zoom",
-						"0.03",
-						"0.06"
-					]
-				]
-			],
-			[
-				11625,
-				[
-					[
-						"Add Camera Zoom",
-						"0.06",
-						"0.12"
-					]
-				]
-			],
-			[
-				11812.5,
-				[
-					[
-						"Add Camera Zoom",
-						"0.06",
-						"0.12"
-					]
-				]
-			],
-			[
-				12000,
-				[
-					[
-						"Add Camera Zoom",
-						"",
-						""
+						"Play Animation",
+						"ugh",
+						"dad"
 					]
 				]
 			]
-		],
-		"notes": [],
-		"splashSkin": null,
-		"validScore": false,
-		"gfVersion": "gf-tankmen",
-		"bpm": 160,
-		"arrowSkin": null,
-		"needsVoices": true,
-		"song": "Ugh"
+		]
 	}
 }
